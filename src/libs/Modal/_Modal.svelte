@@ -13,11 +13,47 @@
     loadingContent.set("Loading...");
   }
 
+  export function trapFocus(node: HTMLElement) {
+    const focusableElements =
+      node.children.length &&
+      (node.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      ) as NodeListOf<HTMLInputElement>);
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    console.log(firstFocusable, lastFocusable);
+
+    const handleTab = (e: KeyboardEvent) => {
+      // is Tab key not pressed
+      console.log(12313);
+      if (e.key !== "Tab" || e.keyCode !== 9) return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          lastFocusable.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          firstFocusable.focus();
+          e.preventDefault();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleTab, false);
+
+    return {
+      destroy() {
+        document.removeEventListener("keydown", handleTab, false);
+      },
+    };
+  }
+
   export function modalEscape(_node: HTMLElement) {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        modalContent.set(null);
-        modalOpen.set(false);
+        closeModal();
       }
     };
 
