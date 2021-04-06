@@ -16,7 +16,7 @@
   };
 </script>
 
-<div class={tw`bg-white w-full min-h-screen`}>
+<div class={tw`bg-white w-full flex flex-col min-h-screen`}>
   <Navbar />
   <div class={tw`flex-grow`}>
     <Router {routes} />

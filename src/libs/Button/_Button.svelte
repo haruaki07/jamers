@@ -3,25 +3,19 @@
 
   export let override = false;
   export let href: string = "";
-  export let color = "gray";
+  export let color = "gray-800";
+  export let block = false;
 
   let className = "";
   export { className as class };
 
-  let colorClass = "bg-gray-900 ring-gray-300 text-white";
-
-  $: switch (color) {
-    case "indigo":
-      colorClass = "bg-indigo-500 ring-indigo-200 text-white";
-      break;
-    default:
-      colorClass = "bg-gray-800 ring-gray-300 text-white";
-      break;
-  }
+  let colorClass = `bg-${color} ring-${color} border-${color} text-white`;
 
   $: style = tw(
+    colorClass,
     {
-      [`py-2 px-4 ${colorClass} rounded-lg focus:(ring outline-none) inline-block`]: !override,
+      [`py-1 px-3 rounded focus:(ring-2 border-white outline-none) inline-block text(white sm) border`]: !override,
+      "w-full": block,
     },
     className
   );

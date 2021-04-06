@@ -1,37 +1,28 @@
 <script lang="ts">
   import { tw } from "twind";
   import Button from "~/libs/Button";
-  import Modal, {
-    modalOpen,
-    modalContent,
-    modalDialogClass,
-  } from "~/libs/Modal";
-  import { Table, Td, Th, Tr } from "~/libs/Table";
-  // import Modaladd from "./modaladd.svelte";
-
-  const openModal = () => {
-    modalOpen.set(true);
-    modalContent.set(import("./modaladd.svelte"));
-    modalDialogClass.set("sm:max-w-md");
-  };
+  import Input from "~/libs/Input";
+  import Lazy from "~/libs/Lazy.svelte";
+  import Modal, { openModal } from "~/libs/Modal";
+  import { formField } from "~/libs/styles";
 </script>
 
-<div class={tw`container mx-auto`}>
-  <Table wrapperClass="rounded-xl">
-    <thead>
-      <Tr overide class="text-left bg-gray-100">
-        <Th>Name</Th>
-        <Th>Source</Th>
-      </Tr>
-    </thead>
-    <tbody>
-      <Tr class="text-left">
-        <Td colspan="2">No results.</Td>
-      </Tr>
-    </tbody>
-  </Table>
-
-  <Button on:click={openModal}>Open Modal</Button>
+<div class={tw`container mx-auto mt-4`}>
+  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <form on:submit|preventDefault>
+    <label class={formField}>
+      Title
+      <Input block />
+    </label>
+    <label class={formField}>
+      Description
+      <Input textarea block />
+    </label>
+    <Button color="gray-800" type="submit" class="mt-1">Save</Button>
+  </form>
+  <Button on:click={openModal}>Modal</Button>
 </div>
 
-<Modal />
+<Modal dialogClass="max-w-md my-12">
+  <Lazy component={import("./modaladd.svelte")} />
+</Modal>
