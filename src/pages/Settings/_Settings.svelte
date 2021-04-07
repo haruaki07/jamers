@@ -8,7 +8,7 @@
 
     .title {
       text-shadow: 0 4px 1px ${theme("colors", ["red", "900"])};
-      @apply text(white 5xl) font-black;
+      @apply text(white 5xl) sm:text-6xl font-black;
     }
 
     .btn-back {
