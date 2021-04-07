@@ -21,7 +21,7 @@
           @apply bg-green-700;
         }
 
-        &.false progress {
+        &.false {
           @apply bg-red-700;
         }
       }
