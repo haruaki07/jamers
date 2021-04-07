@@ -1,13 +1,23 @@
 <script lang="ts">
   import Navbar from "./libs/Navbar";
-  import Router from "svelte-spa-router";
+  import Router, { location } from "svelte-spa-router";
   import { tw } from "twind";
   import routes from "./routes";
+  import { fly } from "svelte/transition";
+  import { css } from "twind/css";
+  import Sunset from "~/assets/sunset.jpg";
+
+  const style = tw(css`
+    background-image: url(${Sunset});
+    @apply bg(center cover) bg-white w-full min-h-screen overflow-hidden;
+  `);
 </script>
 
-<div class={tw`bg-white w-full flex flex-col min-h-screen`}>
-  <Navbar />
-  <div class={tw`flex-grow`}>
-    <Router {routes} />
-  </div>
+<div class={style}>
+  <!-- <Navbar /> -->
+  {#key $location}
+    <div class={tw`relative`} in:fly={{ y: -100, duration: 200, delay: 100 }}>
+      <Router {routes} />
+    </div>
+  {/key}
 </div>
