@@ -1,10 +1,8 @@
-import { withForms } from "@twind/forms";
 import { setup } from "twind";
 import App from "./App.svelte";
+import "./styles.css";
 
-setup({
-  preflight: withForms(),
-});
+setup();
 
 const app = new App({
   target: document.getElementById("app"),

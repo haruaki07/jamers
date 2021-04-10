@@ -1,32 +1,33 @@
 <script lang="ts">
   import { tw } from "twind";
+  import { animation, css } from "twind/css";
 
   export let override = false;
-  export let href: string = "";
-  export let color = "gray-800";
   export let block = false;
+  export let className = "";
 
-  let className = "";
-  export { className as class };
+  let customClass = "";
+  export { customClass as class };
 
-  let colorClass = `bg-${color} ring-${color} border-${color} text-white`;
+  const motion = animation(".15s ease-in", {
+    "50%": {
+      transform: "scale(.75)",
+    },
+    "100%": {
+      transform: "scale(1)",
+    },
+  });
 
   $: style = tw(
-    colorClass,
+    css({ "&:active": motion }),
     {
-      [`py-1 px-3 rounded focus:(ring-2 border-white outline-none) inline-block text(white sm) border`]: !override,
+      [`text(white sm) font-medium`]: !override,
       "w-full": block,
     },
-    className
+    customClass
   );
 </script>
 
-{#if !href}
-  <button {...$$restProps} on:click class={style}>
-    <slot />
-  </button>
-{:else}
-  <a {href} class={style} on:click {...$$restProps}>
-    <slot />
-  </a>
-{/if}
+<button {...$$restProps} on:click class="{style} {className}">
+  <slot />
+</button>

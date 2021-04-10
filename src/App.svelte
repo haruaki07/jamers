@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Navbar from "./libs/Navbar";
   import Router, { location } from "svelte-spa-router";
   import { tw } from "twind";
   import routes from "./routes";

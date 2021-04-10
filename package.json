@@ -8,9 +8,10 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "next",
-    "pretty-bytes": "^5.6.0",
     "svelte": "^3.35.0",
+    "svelte-dnd-action": "^0.9.5",
     "svelte-preprocess": "^4.6.9",
+    "svelte-windicss-preprocess": "^3.3.1",
     "typescript": "^4.2.3",
     "vite": "^2.1.5"
   },
@@ -21,6 +22,7 @@
     "@twind/forms": "^0.1.4",
     "felte": "^0.6.3",
     "intercept-fetch": "^1.4.3",
+    "preloader.js": "^1.2.2",
     "superstruct": "^0.15.1",
     "svelte-spa-router": "^3.1.0",
     "twind": "^0.16.10"
