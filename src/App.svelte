@@ -6,10 +6,13 @@
   import { css } from "twind/css";
   import Sunset from "~/assets/sunset.jpg";
 
-  const style = tw(css`
-    background-image: url(${Sunset});
-    @apply bg(center cover) bg-white w-full min-h-screen overflow-hidden;
-  `);
+  const style = tw(
+    css({
+      backgroundImage: `url(${Sunset})`,
+      "@apply":
+        "bg(center cover) bg-white w-full min-h-screen overflow-hidden select-none",
+    })
+  );
 </script>
 
 <div class={style}>
