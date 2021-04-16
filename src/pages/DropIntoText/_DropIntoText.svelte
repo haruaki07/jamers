@@ -1,9 +1,11 @@
 <script lang="ts">
   import { Droppable } from "@shopify/draggable";
   import { onMount } from "svelte";
+  import { dndzone } from "svelte-dnd-action";
   import { flip } from "svelte/animate";
   import { tw, css } from "twind/css";
   import data from "./data";
+  import DropZone from "./DropZone.svelte";
 
   function getChoice(id: number) {
     return data.choices.find((choice) => choice.id === id);
@@ -21,69 +23,31 @@
 
   let choices = [...data.choices];
 
-  function dropintotext(node: HTMLElement) {
-    const containers = node.querySelectorAll(".container");
+  $: question = data.question.split(/\[([0-9]+)\]/g);
 
-    if (!containers.length) return;
-
-    const droppable = new Droppable(containers, {
-      draggable: ".choice",
-      dropzone: ".dropzone",
-    });
-
-    let droppableOrigin: string;
-
-    droppable.on("drag:start", (evt) => {
-      droppableOrigin = evt.originalSource.dataset.id;
-    });
-
-    droppable.on("droppable:dropped", (evt) => {
-      const dropzoneEl = evt.dropzone;
-      if (droppableOrigin !== dropzoneEl.dataset.id) {
-        evt.cancel();
-        return;
-      }
-      const id = +droppableOrigin;
-    });
-
-    return {
-      destroy() {
-        droppable.destroy();
-      },
-    };
+  function handleConsider(e) {
+    const dropped = e.detail.items.sort((a, b) => a.id - b.id);
+    choices = e.detail.items;
   }
 
-  $: question = data.question.split(/\[([0-9]+)\]/g);
+  function handleFinalize(e) {
+    const dropped = e.detail.items.sort((a, b) => a.id - b.id);
+    choices = e.detail.items;
+  }
 </script>
 
-<div use:dropintotext>
-  <div class="{tw`bg-white p-6 rounded-lg flex items-center`} container">
-    {#each question as q}
-      {#if q.match(/[0-9+]/)}
-        <span
-          use:measureTextWidth
-          data-id={q}
-          class="{tw`bg-gray-300 p-1.5 inline-block`} dropzone"
-        >
-          {getChoice(+q).text}
-        </span>
-      {:else}
-        <span class={tw`p-1.5 inline-block`}>{q}</span>
-      {/if}
-    {/each}
-  </div>
+<div>
+  <DropZone max={1} value="tai" />
 
   <div
-    class="{tw`flex items-center flex-wrap space-x-4 mt-12 bg-white p-6`} container"
+    class={tw`overflow-x-auto h-20 w-full bg-white flex items-center space-x-4`}
+    use:dndzone={{ items: choices, flipDurationMs: 300 }}
+    on:consider={handleConsider}
+    on:finalize={handleFinalize}
   >
-    {#each choices as c (c.id)}
-      <div class="dropzone" animate:flip>
-        <span
-          class="{tw`inline-block bg-gray-300 p-1.5`} choice"
-          data-id={c.id}
-        >
-          {c.text}
-        </span>
+    {#each choices as choice (choice.id)}
+      <div class={tw`bg-gray-200 p-3`} animate:flip={{ duration: 300 }}>
+        {choice.text}
       </div>
     {/each}
   </div>

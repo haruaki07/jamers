@@ -10,7 +10,7 @@ const routes: RouteDefinition = new Map();
 routes.set("/", wrap({ asyncComponent: () => import("./pages/Home") }));
 routes.set("/settings", Settings);
 routes.set("/play", Play);
-routes.set("/dropintotext", DropIntoText);
+// routes.set("/dropintotext", DropIntoText);
 routes.set("*", NotFound);
 
 export default routes;

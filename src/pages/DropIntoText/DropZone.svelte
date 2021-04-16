@@ -8,8 +8,6 @@
 
   export let max = 1;
   export let value = "";
-  export let x = 0;
-  export let y = 0;
   export let wrapperClass = "";
   export let itemClass = "";
   export let disabled = false;
@@ -27,6 +25,7 @@
 
   function onFinalize(e: DndEvt) {
     const dropped = e.detail.items;
+    console.log(e.detail);
     if (dropped[0].value !== value) {
       disabled = true;
       return;
@@ -40,8 +39,8 @@
     flipDurationMs: 300,
     dropFromOthersDisabled,
   };
-  $: wrapperStyle = tw(`h-12 w-12 overflow-auto flex absolute ${wrapperClass}`);
-  $: itemStyle = tw(`w-12 h-12 rounded-full ${itemClass}`);
+  $: wrapperStyle = tw(`bg-gray-300 p-1.5 inline-block ${wrapperClass}`);
+  $: itemStyle = tw(`bg-gray-300 p-1.5 inline-block ${itemClass}`);
 </script>
 
 <div
@@ -49,7 +48,6 @@
   use:dndzone={opts}
   on:consider={onConsider}
   on:finalize={onFinalize}
-  style="left: {x}px; top: {y}px"
 >
   {#each items as item (item.id)}
     <div class={itemStyle} animate:flip={{ duration: 300 }} />

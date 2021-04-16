@@ -70,6 +70,8 @@
   import { onDestroy } from "svelte";
 
   export let dialogClass = "";
+  export let backdrop = false;
+  export let vAlign: "start" | "center" | "end" = "center";
 
   $: style = {
     wrapper: tw(
@@ -77,11 +79,12 @@
         scrollbarWidth: "none",
         overscrollBehaviorY: "contain",
         "@apply":
-          "fixed inset-0 flex items-start justify-center p-3 z-[99999] overflow-y-auto",
+          "fixed inset-0 flex justify-center p-3 z-[99999] overflow-y-auto",
         "&::-webkit-scrollbar": {
           width: 0,
         },
-      })
+      }),
+      `items-${vAlign}`
     ),
     overlay: tw("fixed inset-0 bg-black bg-opacity-25"),
     dialog: tw`bg-white w-full shadow relative z-10 rounded-md${dialogClass}`,
@@ -97,7 +100,7 @@
     <div
       class={style.overlay}
       transition:fade={{ duration: 150 }}
-      on:click={closeModal}
+      on:click={() => backdrop && closeModal()}
     />
     <div class={style.dialog} transition:fly={{ y: -50, duration: 150 }}>
       <slot />

@@ -257,6 +257,11 @@ domutils@^2.4.4:
     domelementtype "^2.2.0"
     domhandler "^4.1.0"
 
+easytimer.js@^4.3.4:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/easytimer.js/-/easytimer.js-4.3.4.tgz#8a6b960f0fafc353f136f8240cfb887f9dcd0476"
+  integrity sha512-iHei5oeYMQENe3Xs7eT8PNTFoPaO6M9/FRrxhyyxBvv7XoY0yKfd06e+rhohu0ZUXnFNhbNhVtBmcffn/kdqrA==
+
 entities@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
