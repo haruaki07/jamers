@@ -1,15 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { push } from "svelte-spa-router";
   import { fade, fly } from "svelte/transition";
   import { tw } from "twind";
   import { score } from "./scores";
 
   const dispatch = createEventDispatcher();
-
-  const handleRestart = () => {
-    dispatch("restart");
-  };
 </script>
 
 <div
@@ -29,13 +24,13 @@
     <div class={tw`flex mt-6 children:w-1/2 space-x-4`}>
       <button
         class={tw`p-2 bg-red-600 rounded-md text-white font-medium`}
-        on:click={() => push("/")}
+        on:click={() => dispatch("exit")}
       >
         Keluar
       </button>
       <button
         class={tw`p-2 bg-blue-600 rounded-md text-white font-medium`}
-        on:click={handleRestart}
+        on:click={() => dispatch("restart")}
       >
         Ulangi
       </button>

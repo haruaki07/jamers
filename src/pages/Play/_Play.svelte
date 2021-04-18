@@ -6,33 +6,33 @@
   import Timer from "~/libs/Timer.svelte";
   import type { TimerEvent } from "easytimer.js";
   import Scores from "~/libs/Scores.svelte";
-  import Modal, { closeModal, openModal } from "~/libs/Modal";
+  import Modal from "~/libs/Modal";
   import PauseDialog from "./_PauseDialog.svelte";
   import { hscore, score } from "./scores";
   import { push } from "svelte-spa-router";
   import GameOverDialog from "./_GameOverDialog.svelte";
 
-  const style = tw(css`
-    z-index: 2;
-    @apply w-full h-screen text-center relative select-none p-4 flex flex-col;
-
-    .question {
-      @apply w-full rounded-lg bg-white h-full flex-grow grid place-content-center text(lg sm:(2xl) red-900) shadow;
-    }
-
-    .choices {
-      @apply flex space-y-4 w-full flex-col sm:(flex-row space(x-4 y-0)) flex-shrink-0 mt-4;
-
-      button {
-        @apply transition-transform transform duration-200;
-        @apply w-full sm:w-1/3 rounded-lg bg-green-600 text(lg sm:(2xl) white) p-3 text-center;
-
-        &:hover {
-          @apply scale-105;
-        }
-      }
-    }
-  `);
+  const style = tw(
+    css({
+      "@apply":
+        "w-full h-screen text-center relative select-none p-4 flex flex-col",
+      ".question": {
+        "@apply":
+          "w-full rounded-lg bg-white h-full flex-grow grid place-content-center text(lg sm:(2xl) red-900) shadow",
+      },
+      ".choices": {
+        "@apply":
+          "flex space-y-4 w-full flex-col sm:(flex-row space(x-4 y-0)) flex-shrink-0 mt-4",
+        button: {
+          "@apply":
+            "transition-transform transform duration-200 w-full sm:w-1/3 rounded-lg bg-green-600 text(lg sm:(2xl) white) p-3 text-center",
+          "&:hover": {
+            "@apply": "scale-105",
+          },
+        },
+      },
+    })
+  );
 
   type Vocab = {
     id: number;
@@ -42,6 +42,7 @@
 
   let reset = false;
   let isGameOver = false;
+  let paused = false;
   let current: Vocab = {
     id: -1,
     key: "",
@@ -49,7 +50,16 @@
   };
   let original: Vocab[] = data.map((v, i) => ({ id: i, key: v[0], val: v[1] }));
   let vocabs: Vocab[] = [...original];
+  let showPauseModal = false;
 
+  const closePauseModal = () => (showPauseModal = false);
+  const openPauseModal = () => (showPauseModal = true);
+
+  onMount(() => {
+    current = getRandVocab();
+  });
+
+  //#region functions
   function getRandVocab() {
     if (vocabs.length) {
       const idx = randomIndex(vocabs);
@@ -61,22 +71,15 @@
   }
 
   function randomChoices(length: number, except: string) {
-    const filtered = original
-      .filter((v) => v.key !== except)
-      .slice(0, length - 1);
-    filtered.push(current); // push the correct answer
-    return shuffle<Vocab>(filtered);
+    const filtered = original.filter((v) => v.key !== except);
+    const shuffled = shuffle<Vocab>(filtered).slice(0, length - 1);
+    shuffled.push(current); // push the correct answer
+    return shuffle<Vocab>(shuffled);
   }
-
-  onMount(() => {
-    current = getRandVocab();
-  });
 
   function handleStop(e: TimerEvent) {
     isGameOver = true;
   }
-
-  let paused = false;
 
   function togglePause(state?: boolean) {
     paused = state ?? !paused;
@@ -84,12 +87,12 @@
 
   function pauseGame() {
     togglePause(true);
-    openModal();
+    openPauseModal();
   }
 
-  function resumeGame() {
+  function handleResume() {
     togglePause(false);
-    closeModal();
+    closePauseModal();
   }
 
   function handleAnswer(val: string) {
@@ -106,10 +109,17 @@
     vocabs = [...original];
     current = getRandVocab();
     reset = true;
-    closeModal();
+    closePauseModal();
     isGameOver = false;
     $score = 0;
   }
+
+  function handleExit(e: any) {
+    closePauseModal();
+    $score = 0;
+    push("/");
+  }
+  //#endregion
 </script>
 
 <div class={style}>
@@ -117,8 +127,9 @@
     <button
       on:click={pauseGame}
       class={tw`px-4 rounded-md shadow bg-white text(red-900) font-medium h-full`}
-      >Pause</button
     >
+      Pause
+    </button>
     <div class={tw`flex`}>
       <Scores score={$score} hscore={$hscore} />
       <Timer
@@ -148,10 +159,14 @@
   {/key}
 
   {#if isGameOver}
-    <GameOverDialog on:restart={handleRestart} />
+    <GameOverDialog on:exit={handleExit} on:restart={handleRestart} />
   {/if}
 </div>
 
-<Modal dialogClass="max-w-sm">
-  <PauseDialog on:restart={handleRestart} resumeAction={resumeGame} />
+<Modal dialogClass="max-w-sm" trapFocus bind:open={showPauseModal}>
+  <PauseDialog
+    on:exit={handleExit}
+    on:restart={handleRestart}
+    on:resume={handleResume}
+  />
 </Modal>

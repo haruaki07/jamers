@@ -1,17 +1,34 @@
-<script context="module" lang="ts">
-  import { writable } from "svelte/store";
+<script lang="ts">
+  import { fade, fly } from "svelte/transition";
+  import { css } from "twind/css";
+  import { tw } from "twind";
+  import { onDestroy } from "svelte";
 
-  export const modalOpen = writable(false);
+  export let dialogClass = "";
+  export let open = false;
+  export let backdrop = false;
+  export let trapFocus = false;
+  export let vAlign: "start" | "center" | "end" = "center";
 
-  export function closeModal() {
-    modalOpen.set(false);
-  }
+  $: style = {
+    wrapper: tw(
+      css({
+        scrollbarWidth: "none",
+        overscrollBehaviorY: "contain",
+        "@apply":
+          "fixed inset-0 flex justify-center p-3 z-[99999] overflow-y-auto",
+        "&::-webkit-scrollbar": {
+          width: 0,
+        },
+      }),
+      `items-${vAlign}`
+    ),
+    overlay: tw("fixed inset-0 bg-black bg-opacity-25"),
+    dialog: tw`bg-white w-full shadow relative z-10 rounded-md${dialogClass}`,
+  };
 
-  export function openModal() {
-    modalOpen.set(true);
-  }
-
-  export function trapFocus(node: HTMLElement) {
+  export function withTrapFocus(node: HTMLElement) {
+    if (!trapFocus) return;
     const focusableElements =
       node.children.length &&
       (node.querySelectorAll(
@@ -46,63 +63,30 @@
     };
   }
 
-  export function modalEscape(_node: HTMLElement) {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeModal();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape, false);
-
-    return {
-      destroy() {
-        document.removeEventListener("keydown", handleEscape, false);
-      },
-    };
+  function closeModal() {
+    open = false;
   }
-</script>
-
-<script lang="ts">
-  import { fade, fly } from "svelte/transition";
-  import { css } from "twind/css";
-  import { tw } from "twind";
-  import { onDestroy } from "svelte";
-
-  export let dialogClass = "";
-  export let backdrop = false;
-  export let vAlign: "start" | "center" | "end" = "center";
-
-  $: style = {
-    wrapper: tw(
-      css({
-        scrollbarWidth: "none",
-        overscrollBehaviorY: "contain",
-        "@apply":
-          "fixed inset-0 flex justify-center p-3 z-[99999] overflow-y-auto",
-        "&::-webkit-scrollbar": {
-          width: 0,
-        },
-      }),
-      `items-${vAlign}`
-    ),
-    overlay: tw("fixed inset-0 bg-black bg-opacity-25"),
-    dialog: tw`bg-white w-full shadow relative z-10 rounded-md${dialogClass}`,
-  };
 
   onDestroy(() => {
-    $modalOpen && closeModal();
+    open && closeModal();
   });
 </script>
 
-{#if $modalOpen}
-  <div class={style.wrapper}>
+{#if open}
+  <div class={style.wrapper} use:withTrapFocus>
     <div
       class={style.overlay}
       transition:fade={{ duration: 150 }}
       on:click={() => backdrop && closeModal()}
     />
-    <div class={style.dialog} transition:fly={{ y: -50, duration: 150 }}>
+    <div
+      class={style.dialog}
+      transition:fly={{ y: -50, duration: 150 }}
+      on:introstart
+      on:outrostart
+      on:introend
+      on:outroend
+    >
       <slot />
     </div>
   </div>
