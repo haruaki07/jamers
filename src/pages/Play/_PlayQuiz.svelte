@@ -22,7 +22,7 @@
         "w-full h-screen text-center relative select-none p-4 flex flex-col",
       ".question": {
         "@apply":
-          "w-full bg-window-content border(4 red-800) rounded-lg grid place-items-center text(sm sm:base md:(center lg) lg:xl red-900 left) flex-grow p-3",
+          "w-full bg-window-content border(4 red-800) rounded-lg grid place-items-center text(base md:(center lg) lg:xl red-900 left) flex-grow p-3",
         height: "300px",
         overflowY: "auto",
       },
