@@ -48,8 +48,8 @@
     })
   );
 
-  const progress = tweened($loadingProgress, {
-    duration: 400,
+  $: progress = tweened($loadingProgress, {
+    duration: 150,
     easing: cubicOut,
   });
 </script>
