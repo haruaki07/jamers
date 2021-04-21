@@ -1,6 +1,18 @@
 import { get, writable } from "svelte/store";
 
+export interface Choice {
+  value: string;
+  correct: boolean;
+}
+
+export type Question = {
+  id: number;
+  text: string;
+  choices: Choice[];
+};
+
 export interface ICategory {
+  questions: Question[];
   id: string;
   name: string;
   vocabs: string[][];

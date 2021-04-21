@@ -222,5 +222,486 @@
         ]
       }
     ]
+  },
+  {
+    "id": "quiz",
+    "name": "Kuis",
+    "categories": [
+      {
+        "id": "lv1",
+        "name": "Level 1",
+        "questions": [
+          {
+            "id": 1,
+            "text": "Nenek pergi ke pasar<br>Bahasa ngoko dari kata 'pergi' adalah...",
+            "choices": [
+              { "value": "Kesah", "correct": false },
+              { "value": "Lunga", "correct": true },
+              { "value": "Tindak", "correct": false }
+            ]
+          },
+          {
+            "id": 2,
+            "text": "Dita sedang memegang buku<br>Bahasa ngoko dari kata 'memegang' adalah...",
+            "choices": [
+              { "value": "Nyekel", "correct": true },
+              { "value": "Ngasta", "correct": false },
+              { "value": "Nyepeng", "correct": false }
+            ]
+          },
+          {
+            "id": 3,
+            "text": "Ibu sedang sakit kepala<br>Bahasa krama inggil dari kata 'kepala' adalah...",
+            "choices": [
+              { "value": "Kepala", "correct": false },
+              { "value": "Sirah", "correct": false },
+              { "value": "Mustaka", "correct": true }
+            ]
+          },
+          {
+            "id": 4,
+            "text": "Masa muda adalah masa yang menyenangkan<br>Bahasa ngoko dari kata 'muda' adalah...",
+            "choices": [
+              { "value": "Enem", "correct": false },
+              { "value": "Enom", "correct": true },
+              { "value": "Awet", "correct": false }
+            ]
+          },
+          {
+            "id": 5,
+            "text": "Rumahku dekat dengan rumah sari<br>Bahasa ngoko dari kata 'dekat' adalah...",
+            "choices": [
+              { "value": "Cedak", "correct": true },
+              { "value": "Perek", "correct": false },
+              { "value": "Caket", "correct": false }
+            ]
+          },
+          {
+            "id": 9,
+            "text": "Tania sedang melihat pelangi<br>Bahasa ngoko dari kata “melihat” adalah...",
+            "choices": [
+              { "value": "Ningali", "correct": false },
+              { "value": "Mirsani", "correct": false },
+              { "value": "Ndelok", "correct": true }
+            ]
+          },
+          {
+            "id": 6,
+            "text": "Pak guru sedang memberi materi<br>Bahasa ngoko dari kata “memberi” adalah...",
+            "choices": [
+              { "value": "Nyaosi", "correct": false },
+              { "value": "Menehi", "correct": true },
+              { "value": "Maringi", "correct": false }
+            ]
+          },
+          {
+            "id": 7,
+            "text": "teman-temanku datang ke rumahku<br>Bahasa krama inggil dari kata “datang” adalah...",
+            "choices": [
+              { "value": "Rawuh", "correct": true },
+              { "value": "Dhateng", "correct": false },
+              { "value": "Teka", "correct": false }
+            ]
+          },
+          {
+            "id": 8,
+            "text": "Aku meminjam kamus di perpustakaan<br>Bahasa krama dari kata “meminjam” adalah...",
+            "choices": [
+              { "value": "Nyilih", "correct": false },
+              { "value": "Nyambut", "correct": true },
+              { "value": "Ngampil", "correct": false }
+            ]
+          },
+          {
+            "id": 10,
+            "text": "Baju itu sangat mahal<br>Bahasa krama dari kata “mahal” adalah...",
+            "choices": [
+              { "value": "Awis", "correct": true },
+              { "value": "Mirah", "correct": false },
+              { "value": "Larang", "correct": false }
+            ]
+          },
+          {
+            "id": 11,
+            "text": "Halaman sekolahku cukup luas<br>Bahasa krama dari kata “luas” adalah...",
+            "choices": [
+              { "value": "Wiyar", "correct": true },
+              { "value": "Ageng", "correct": false },
+              { "value": "Amba", "correct": false }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lv2",
+        "name": "Level 2",
+        "questions": [
+          {
+            "id": 1,
+            "text": "Ibu membeli baju di pasar<br>Ukara kasebat yen diowahi krama alus dadi",
+            "choices": [
+              { "value": "Ibu tuku klambi nang pasar", "correct": false },
+              { "value": "Ibu tumbas rasukan ing peken", "correct": false },
+              {
+                "value": "Ibu mundhut ageman wonten ing peken",
+                "correct": true
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "text": "Adikku sedang makan<br>Ukara kasebut yen diowahi dadi ngoko alus dadi",
+            "choices": [
+              { "value": "Rayine kulo siweg dhahar", "correct": true },
+              { "value": "Adhiku lagi madhang", "correct": false },
+              { "value": "Adhiku siweg dhahar", "correct": false }
+            ]
+          },
+          {
+            "id": 3,
+            "text": "Kakek lunga surabaya numpak kereta<br>Ukara kasebat yen diowahi krama alus dadi",
+            "choices": [
+              {
+                "value": "Simbah lunga menyang surabaya nitih sepur",
+                "correct": false
+              },
+              {
+                "value": "Simbah tindak menyang surabaya nitih sepur ",
+                "correct": true
+              },
+              {
+                "value": "Simbah lunga menyang surabaya numpak sepur",
+                "correct": false
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "text": "Kirani anak yang rajin<br>Ukara kasebat yen diowahi ngoko dadi",
+            "choices": [
+              { "value": "Kirani putro sing giyat", "correct": false },
+              { "value": "Kirani bocah sing sregep", "correct": true },
+              { "value": "Kirani bocah sing giyat", "correct": false }
+            ]
+          },
+          {
+            "id": 5,
+            "text": "Bunga di desa sangat indah<br>bahasa ngoko dari kalimat diatas adalah",
+            "choices": [
+              { "value": "Kembang ing desa banget apik", "correct": true },
+              { "value": "Sekar ing desa sanget leres", "correct": false },
+              { "value": "Sekar ing desa sanget apik", "correct": false }
+            ]
+          },
+          {
+            "id": 6,
+            "text": "Telinga untuk mendengar<br>Bahasa krama inggil dari kalimat di atas adalah...",
+            "choices": [
+              { "value": "kuping kanggo mirengaken", "correct": false },
+              { "value": "kuping kanggo ngrungokake", "correct": false },
+              { "value": "talingan kanggo midhangetaken", "correct": true }
+            ]
+          },
+          {
+            "id": 7,
+            "text": "Nenekku sudah tua<br>Bahasa krama dari kalimat di atas adalah...",
+            "choices": [
+              { "value": "Simbah sampun tuwa", "correct": false },
+              { "value": "Simbah wis sepuh", "correct": false },
+              { "value": "Simbah sampun sepuh", "correct": true }
+            ]
+          },
+          {
+            "id": 8,
+            "text": "teman-temanku datang ke rumahku<br>Bahasa krama inggil dari kata “datang” adalah...",
+            "choices": [
+              { "value": "Rawuh", "correct": true },
+              { "value": "Dhateng", "correct": false },
+              { "value": "Teka", "correct": false }
+            ]
+          },
+          {
+            "id": 9,
+            "text": "Nalika pacaturan karo Pakdhe, minangka pawongan kang luwih enom kudu nggunakake basa...",
+            "choices": [
+              { "value": "Krama lugu", "correct": false },
+              { "value": "Krama Alus", "correct": true },
+              { "value": "Ngoko Alus", "correct": false },
+              { "value": "Ngoko lugu", "correct": false }
+            ]
+          },
+          {
+            "id": 10,
+            "text": "Menyang sapa wae ngoko alus digunakake?",
+            "choices": [
+              { "value": "Mas/Mbak", "correct": true },
+              { "value": "Kanca", "correct": false },
+              { "value": "Bapak/Ibu", "correct": false },
+              { "value": "Guru", "correct": false }
+            ]
+          },
+          {
+            "id": 11,
+            "text": "Pak Agus : \"Bola-bali telat wae, apa maneh alesanmu nar?\"<br>Sunar : \"....\"<br>Ukara kang trep kanggo mangsuli Pak Agus yaiku...",
+            "choices": [
+              { "value": "Dalem kula tebih sanget, Pak", "correct": false },
+              { "value": "Griya kula tebih, Pak", "correct": true },
+              { "value": "Dalem kula adoh, Pak", "correct": false },
+              { "value": "Umahku adoh, Pak", "correct": false }
+            ]
+          },
+          {
+            "id": 12,
+            "text": "\"Saben dina, aku sekolah numpak sepeda motor\"<br>Ukara kasebut yen diowahi dadi ngoko alus dadi...",
+            "choices": [
+              {
+                "value": "Saben isuk, aku sekolah nitih sepeda motor",
+                "correct": false
+              },
+              {
+                "value": "Saben dinten, kula sekolah nitih sepeda motor",
+                "correct": true
+              },
+              {
+                "value": "Saben dina, sampeyan sekolah numpak sepeda motor",
+                "correct": false
+              },
+              {
+                "value": "Saben dina, kula sekolah nunggang sepeda motor",
+                "correct": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lv3",
+        "name": "Level 3",
+        "questions": [
+          {
+            "id": 1,
+            "text": "\"Kowe mau apa uwis mangan?\"<br>Ukara kasebut yen diowahi dadi krama inggil dadi...",
+            "choices": [
+              {
+                "value": "Sampeyan kalawau napa sampun dhahar?",
+                "correct": false
+              },
+              {
+                "value": "Panjenengan kalawau menapa sampun dhahar?",
+                "correct": true
+              },
+              {
+                "value": "Panjenengan wau napa sampun nedha?",
+                "correct": false
+              },
+              {
+                "value": "Panjenengan wau menapa wis dhahar?",
+                "correct": false
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "text": "\"Kula sampun mbeta seratipun, Pak.\"<br>Ukara kasebut yen diowahi dadi ngoko lugu dadi...",
+            "choices": [
+              { "value": "Aku wis gawa surate, Pak", "correct": true },
+              { "value": "Aku ora gawa apa-apa, Pak", "correct": false },
+              { "value": "Aku wis gawa serat, Pak", "correct": false },
+              { "value": "Aku ora gawa surate, Pak", "correct": false }
+            ]
+          },
+          {
+            "id": 3,
+            "text": "Krama aluse \"ngomong\" yaiku...",
+            "choices": [
+              { "value": "Kandha", "correct": false },
+              { "value": "Ngendhika", "correct": true },
+              { "value": "Mbacot", "correct": false },
+              { "value": "Matur", "correct": false }
+            ]
+          },
+          {
+            "id": 4,
+            "text": "Ngoko lugune \"talingan\" yaiku...",
+            "choices": [
+              { "value": "Tangan", "correct": false },
+              { "value": "Irung", "correct": false },
+              { "value": "Kuping", "correct": true },
+              { "value": "Rambut", "correct": false }
+            ]
+          },
+          {
+            "id": 5,
+            "text": "Ibu : \"Bapak wis ... ?\"<br>Bapak: \"Wis, ngenteni ibu kesuwen, dak kira durung kondur.\"<br>Ibu : \"Lagi wae pak, kanca-kanca ngajak, mampir daleme Bu Wira\"<br>Bapak: \"Lo, Bu Wira wis kondur ta?\"<br><br>Tembung kang mathuk kanggo njanggkepi pacelathon ing dhuwur yaiku...",
+            "choices": [
+              { "value": "Nedha", "correct": false },
+              { "value": "Maem", "correct": false },
+              { "value": "Mangan", "correct": false },
+              { "value": "Dhahar", "correct": true }
+            ]
+          },
+          {
+            "id": 9,
+            "text": "Dipun sekecakaken anggenipun ...., kula ugi nembe kemawon ....<br>Tembung-tembung sing trep kanggo nyampurnaake ukara kasebut yaiku...",
+            "choices": [
+              { "value": "Nedha, nedha", "correct": false },
+              { "value": "Nedha, mangan", "correct": false },
+              { "value": "Dhahar, nedha", "correct": true },
+              { "value": "Nedha, dhahar", "correct": false }
+            ]
+          },
+          {
+            "id": 6,
+            "text": "Pak guru sedang memberi materi<br>Bahasa ngoko dari kata “memberi” adalah...",
+            "choices": [
+              { "value": "Nyaosi", "correct": false },
+              { "value": "Menehi", "correct": true },
+              { "value": "Maringi", "correct": false }
+            ]
+          },
+          {
+            "id": 7,
+            "text": "Anis : \"mengko sore sido latihan ora san?\"<br>Santi : \"sido, mengko dak ampiri jam setengah papat.\"<br>Pacelathon ing dhuwur mau migunakake unggah-ungguh basa...",
+            "choices": [
+              { "value": "Krama Madya", "correct": false },
+              { "value": "Ngoko Lugu", "correct": true },
+              { "value": "Ngoko Alus", "correct": false },
+              { "value": "Krama Lugu", "correct": false }
+            ]
+          },
+          {
+            "id": 8,
+            "text": "Jingglengono 5 ukara ing ngisor!<br>1. wong tuwa marang wong enom<br>2. wong/bocah sabarakan/ meh padha umur-umurane<br>3. wong tuwa marang wong enom kang luwih dhuwur kalungguhane<br>4. wong sing luwih dhuwur pangkate marang sing luwih asor<br>5. ngrembug wong liya kang perlu diajeni<br><br>Sing kalebu ing ragam ngoko lugu yaiku...",
+            "choices": [
+              { "value": "1,2,3", "correct": false },
+              { "value": "1,2,4", "correct": true },
+              { "value": "2,3,4", "correct": false },
+              { "value": "2,4,6", "correct": false }
+            ]
+          },
+          {
+            "id": 10,
+            "text": "\"Bapak wis kondur saka Bandhung.\"Kondur basa ngokone yaiku...",
+            "choices": [
+              { "value": "Mulih", "correct": true },
+              { "value": "Lunga", "correct": false },
+              { "value": "Manggon", "correct": false },
+              { "value": "Omahe", "correct": false }
+            ]
+          },
+          {
+            "id": 11,
+            "text": "\"Bu lik lunga pasar numpak pit motor.\"<br>Ukara ing dhuwur basa kramane...",
+            "choices": [
+              {
+                "value": "Bu lik tindak peken nitih sepedha motor",
+                "correct": true
+              },
+              { "value": "Bu lik pasar nitih sepedha motor", "correct": false },
+              { "value": "Bu lik peken nitih pit motor", "correct": false },
+              {
+                "value": "Bu lik tindak peken numpak sepeda motor",
+                "correct": false
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "text": "Rina ... Bu guru nabung",
+            "choices": [
+              { "value": "didhawuhi", "correct": true },
+              { "value": "Dikongkon", "correct": false },
+              { "value": "Dipeksa", "correct": false },
+              { "value": "Ditimbali", "correct": false }
+            ]
+          },
+          {
+            "id": 13,
+            "text": "\"Bu Dian tindak kantor nitih bis\"<br>Salinen nganggo basa ngoko!",
+            "choices": [
+              { "value": "Bu Dian lunga kantor numpak bis", "correct": true },
+              { "value": "Bu Dian lunga kantor", "correct": false },
+              { "value": "Bu Dian numpak bis", "correct": false },
+              {
+                "value": "Bu Dian lunga kantor ditumpaki bis",
+                "correct": false
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "text": "Bu, kula .... sekolah, menawi ibu .... kantor pukul pinten?",
+            "choices": [
+              { "value": "mlampah, tindak", "correct": true },
+              { "value": "mangkat, mlampah", "correct": false },
+              { "value": "tindak, tindak", "correct": false },
+              { "value": "tindak, mplampah", "correct": false }
+            ]
+          },
+          {
+            "id": 15,
+            "text": "Kepriye aturmu nalika nyuwun idin arep nginep ing daleme simbah?",
+            "choices": [
+              {
+                "value": "Bu, menapa kepareng menawi ngenjang kula nyipeng wonten griyanipun simbah?",
+                "correct": true
+              },
+              {
+                "value": "Bu, menapa pikantuk menawi ngenjang kula nyipeng wonten dalemipun simbah.",
+                "correct": false
+              },
+              {
+                "value": "Bu, menapa kepareng menawi ngenjang kula nyipeng wonten dalemipun simbah?",
+                "correct": false
+              },
+              {
+                "value": "Bu, menapa angsal menawi ngenjang kula nyipeng wonten dalemipun simbah?",
+                "correct": false
+              }
+            ]
+          },
+          {
+            "id": 16,
+            "text": "\"Lilis boten mlebet sekolah amargi gerah\"<br>Kanggo Lilis tembung gerah benere...",
+            "choices": [
+              { "value": "sakit", "correct": true },
+              { "value": "kesel", "correct": false },
+              { "value": "sayah", "correct": false },
+              { "value": "lara", "correct": false }
+            ]
+          },
+          {
+            "id": 17,
+            "text": "\"Kula sampun kandha marang bapak menawi kula nyuwun artha.\"<br>Tembung \"kandha\" ing ukara nduwur benere...",
+            "choices": [
+              { "value": "Matur", "correct": true },
+              { "value": "Ngomong", "correct": false },
+              { "value": "Ngendika", "correct": false },
+              { "value": "Njaluk", "correct": false }
+            ]
+          },
+          {
+            "id": 18,
+            "text": "\"Adhik .... susu, kula .... es teh ugi bapak .... kopi\"<br>Tembung-tembung sing trep kanggo nyampurnaake ukara kasebut...",
+            "choices": [
+              { "value": "Nginum, nginum, ngunjuk", "correct": true },
+              { "value": "Ngombe, nginum, ngunjuk", "correct": false },
+              { "value": "Nginum, nginum, ngunjuk", "correct": false },
+              { "value": "Ngombe, ngombe, ngunjuk", "correct": false }
+            ]
+          },
+          {
+            "id": 19,
+            "text": "\"Simbah lagi lara untu.\" Yen nganggo basa krama alus dadi...",
+            "choices": [
+              { "value": "Simbah nembe gerah waja", "correct": true },
+              { "value": "Simbah lagi gerah untu", "correct": false },
+              { "value": "Simbah nembe gerah untu", "correct": false },
+              { "value": "Simbah lagi gerah waja", "correct": false }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

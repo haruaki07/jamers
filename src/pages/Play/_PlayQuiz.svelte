@@ -1,9 +1,8 @@
 <script lang="ts">
   import { css, tw } from "twind/css";
   import { onMount } from "svelte";
-  import { randomIndex, shuffle, sleep } from "~/utils";
+  import { shuffle, sleep } from "~/utils";
   import Timer from "~/libs/Timer.svelte";
-  import type { TimerEvent } from "easytimer.js";
   import Scores from "~/libs/Scores.svelte";
   import Modal from "~/libs/Modal";
   import PauseDialog from "./_PauseDialog.svelte";
@@ -13,6 +12,7 @@
   import Button from "~/libs/Button";
   import { sounds } from "~/sounds";
   import { getCategory } from "~/stores";
+  import type { Question } from "~/stores";
 
   export let params: { id?: string } = {};
 
@@ -22,17 +22,15 @@
         "w-full h-screen text-center relative select-none p-4 flex flex-col",
       ".question": {
         "@apply":
-          "w-full h-full bg-window-content border(4 red-800) rounded-lg flex-grow grid place-content-center text(lg sm:2xl red-900)",
-        span: {
-          "@apply": "lowercase inline",
-        },
+          "w-full bg-window-content border(4 red-800) rounded-lg grid place-items-center text(sm sm:base md:(center lg) lg:xl red-900 left) flex-grow p-3",
+        height: "300px",
+        overflowY: "auto",
       },
       ".choices": {
-        "@apply":
-          "flex space-y-4 w-full flex-col sm:(flex-row space(x-4 y-0)) flex-shrink-0 mt-4",
+        "@apply": "flex(& col) space-y-4 w-full flex-shrink-0 mt-4",
         button: {
           "@apply":
-            "transition-transform transform duration-200 w-full sm:w-1/3 rounded-lg bg-red-900 text(lg sm:2xl white center) p-3 capitalize shadow",
+            "transition-transform transform duration-200 w-full rounded-lg bg-red-900 text(sm sm:base white md:(center lg)) p-3 capitalize shadow font-medium",
           "&:hover": {
             "@apply": "scale-105",
           },
@@ -41,26 +39,21 @@
     })
   );
 
-  type Vocab = {
-    id: number;
-    key: string;
-    val: string;
-  };
-
   //#region vars
-  const category = getCategory("vocabs", params.id);
+  const category = getCategory("quiz", params.id);
   let timeLimit = 60; // seconds
   let isDataLoaded = false;
   let reset = false;
   let isGameOver = false;
   let paused = false;
-  let current: Vocab = {
+  let current: Question = {
     id: -1,
-    key: "",
-    val: "",
+    text: "",
+    choices: [],
   };
-  let original: Vocab[];
-  let vocabs: Vocab[];
+  let currentIdx = 0;
+  let original: Question[];
+  let questions: Question[];
   let showPauseModal = false;
   $: highscore = $hscore[category.id];
 
@@ -68,34 +61,33 @@
   const openPauseModal = () => (showPauseModal = true);
   //#endregion
   onMount(() => {
-    const data = category.vocabs;
-    original = data.map((v, i) => ({ id: i, key: v[0], val: v[1] }));
-    vocabs = [...original];
+    const data = category.questions;
+    original = data;
+    questions = [...original];
     isDataLoaded = true;
-    current = getRandVocab();
+    getQuestion();
   });
 
   //#region functions
-  function getRandVocab() {
-    if (vocabs.length) {
-      const idx = randomIndex(vocabs);
-      return vocabs[idx];
+  function getQuestion() {
+    const idx = currentIdx;
+
+    if (!questions[idx]) {
+      return handleStop(); //gameover
     }
-    vocabs = [...original]; // reset it
-    const idx = randomIndex(vocabs);
-    return vocabs[idx];
+    current = questions[idx];
+    currentIdx++;
   }
 
-  function randomChoices(length: number, except: string) {
-    const filtered = original.filter((v) => v.key !== except); // without correct answer
-    const choices = shuffle(filtered).slice(0, length - 1);
-    choices.push(current); // push the correct answer
-    return shuffle(choices);
+  function randomChoices() {
+    return shuffle(current.choices);
   }
 
-  function handleStop(e: TimerEvent) {
+  function handleStop() {
     isGameOver = true;
-    $hscore[category.id] = highscore;
+    if ($score >= $hscore[category.id]) {
+      $hscore[category.id] = $score;
+    }
   }
 
   function togglePause(state?: boolean) {
@@ -112,9 +104,11 @@
     closePauseModal();
   }
 
-  async function handleAnswer(e: any, val: string) {
-    if (current.val !== val) {
+  async function handleAnswer(e: any, correct: boolean) {
+    if (!correct) {
       e.target.classList.add(tw("bg-red-600!"));
+      const res = Math.max(0, $score - 10);
+      $score = res;
       await sleep(100); // delay
       e.target.classList.remove(tw("bg-red-600!"));
       return;
@@ -124,16 +118,17 @@
     $sounds["pipop"].play();
     await sleep(100); // delay
 
-    vocabs = vocabs.filter(({ key }) => key !== current.key); // remove from array
     $score += 10; // add score
     if ($score >= highscore) highscore = $score; // if score >= highscore change it
-    current = getRandVocab(); // set next question
+    getQuestion(); // set next question
+    reset = true;
     e.target.classList.remove(tw("bg-green-600!"));
   }
 
   function handleRestart() {
-    vocabs = [...original];
-    current = getRandVocab();
+    questions = [...original];
+    currentIdx = 0;
+    getQuestion();
     reset = true;
     closePauseModal();
     isGameOver = false;
@@ -143,7 +138,7 @@
   function handleExit() {
     closePauseModal();
     $score = 0;
-    push("/modes/vocabs");
+    push("/modes/quiz");
   }
   //#endregion
 </script>
@@ -170,20 +165,17 @@
         />
       </div>
     </div>
-    {#key current.key}
+    {#key current.id}
       <div class="question">
-        <p>
-          Apakah <span>{category.name}</span> dari kata:
-        </p>
-        <b>{current.key}</b>
+        {@html current.text}
       </div>
       <div class="choices">
-        {#each randomChoices(3, current.key) as choice}
+        {#each randomChoices() as choice}
           <button
-            on:click={async (e) => await handleAnswer(e, choice.val)}
+            on:click={async (e) => await handleAnswer(e, choice.correct)}
             disabled={isGameOver}
           >
-            {choice.val}
+            {choice.value}
           </button>
         {/each}
       </div>

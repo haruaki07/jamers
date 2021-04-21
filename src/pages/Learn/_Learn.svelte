@@ -29,7 +29,8 @@
 </script>
 
 <div class={style}>
-  <ButtonBack />
+  <ButtonBack url="/" />
+
   <h1 class="title">Materi</h1>
   <div class="grid">
     {#each vocabs as vocab}

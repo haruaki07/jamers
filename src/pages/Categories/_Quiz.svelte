@@ -2,7 +2,6 @@
   import { css, tw, theme } from "twind/css";
   import Button from "~/libs/Button";
   import { getModeById } from "~/stores";
-  import { pop } from "svelte-spa-router";
   import ButtonBack from "~/libs/ButtonBack.svelte";
 
   const style = tw(
@@ -14,7 +13,7 @@
         "@apply": "text(white 6xl) font-black mb-4 py-10 flex-shrink-0",
       },
       ".grid": {
-        "@apply": "grid(& cols-1 md:cols-2) gap-4 overflow-y-auto flex-grow",
+        "@apply": "flex(& col) space-y-4 overflow-y-auto flex-grow",
         gridAutoRows: "min-content",
         ".box": {
           "@apply":
@@ -24,16 +23,15 @@
     })
   );
 
-  const vocabsMode = getModeById("vocabs");
+  const quizMode = getModeById("quiz");
 </script>
 
 <div class={style}>
   <ButtonBack url="/modes" />
-
-  <h1 class="title">Pilih Kategori</h1>
+  <h1 class="title">Pilih Level</h1>
   <div class="grid">
-    {#each vocabsMode.categories as category}
-      <Button class="box" href="#/play/{category.id}">{category.name}</Button>
+    {#each quizMode.categories as category}
+      <Button class="box" href="#/quiz/{category.id}">{category.name}</Button>
     {/each}
   </div>
 </div>

@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { tw, css } from "twind/css";
   import Button from "~/libs/Button";
+  import { bgmPlaying, muteBgm, playBgm } from "~/sounds";
 
   const dispatch = createEventDispatcher();
 
@@ -14,6 +15,15 @@
 </script>
 
 <div class={tw(style)}>
+  {#if $bgmPlaying}
+    <Button class={tw`bg-blue(600 hover:700)`} on:click={muteBgm}>
+      Matikan musik
+    </Button>
+  {:else}
+    <Button class={tw`bg-gray(600 hover:700)`} on:click={playBgm}>
+      Nyalakan musik
+    </Button>
+  {/if}
   <Button
     class={tw`bg-green(600 hover:700)`}
     on:click={() => dispatch("resume")}

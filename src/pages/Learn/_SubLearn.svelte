@@ -33,8 +33,9 @@
 </script>
 
 <div class={style}>
-  <ButtonBack />
-  <h1 class="title">Materi</h1>
+  <ButtonBack url="/learn" />
+
+  <h1 class="title">{data.name}</h1>
   <div class="grid">
     <Grid
       data={vocabs}

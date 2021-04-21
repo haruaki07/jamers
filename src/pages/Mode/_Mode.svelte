@@ -26,7 +26,8 @@
 </script>
 
 <div class={style}>
-  <ButtonBack />
+  <ButtonBack url="/" />
+
   <h1 class="title">Pilih Mode</h1>
   <div class="grid">
     {#each $data as mode}

@@ -28,7 +28,8 @@
   );
 </script>
 
-<ButtonBack />
+<ButtonBack url="/" />
+
 <div class={style}>
   <h1 class="title">Pengaturan</h1>
   {#if $bgmPlaying}
