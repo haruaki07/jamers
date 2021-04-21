@@ -2,14 +2,15 @@
   import { css } from "twind/css";
   import { theme, tw } from "twind";
   import { push } from "svelte-spa-router";
+  import Button from "~/libs/Button";
 
   const style = tw(
     css({
       "@apply":
         "w-full h-screen text-center relative py-24 sm:py-4 lg:py-24 flex flex-col",
       ".title": {
-        textShadow: `0 4px 1px ${theme("colors", ["red", "900"])}`,
         "@apply": "text(white 6xl) font-black",
+        textShadow: `0 4px 1px ${tw(theme("colors", ["red", "900"]))}`,
       },
       ".menu": {
         "@apply":
@@ -19,21 +20,18 @@
         transition: "150ms all",
         willChange: "box-shadow, transform",
         "@apply":
-          "text(3xl white) font-bold px-10 py-3 rounded-lg focus:(outline-none) outline-none border-0",
+          "text(3xl white) font-bold px-10 py-3 rounded-lg focus:(outline-none) outline-none border-0 transform transition-transform duration-200",
         "&:hover": {
-          "@apply": "bg-opacity-30",
-        },
-        "&:active": {
-          "@apply": "bg-opacity-40 translate-y-1",
-          boxShadow: "unset",
+          "@apply": "scale-105",
         },
         "&-red": {
-          boxShadow: `0 4px 1px ${theme("colors", ["red", "300"])}`,
-          "@apply": "bg(red-600 opacity-20)",
+          "@apply": "bg-red-600",
+        },
+        "&-green": {
+          "@apply": "bg-green-600",
         },
         "&-blue": {
-          boxShadow: `0 4px 1px ${theme("colors", ["blue", "300"])}`,
-          "@apply": "bg(blue-600 opacity-20)",
+          "@apply": "bg-blue-600",
         },
       },
     })
@@ -41,11 +39,10 @@
 </script>
 
 <div class={style}>
-  <h1 class="title">Kuiz</h1>
+  <h1 class="title">Jamers</h1>
   <div class="menu">
-    <button class="btn btn-red" on:click={() => push("/play")}> Mulai </button>
-    <button class="btn btn-blue" on:click={() => push("/settings")}>
-      Pengaturan
-    </button>
+    <Button class="btn btn-red" href="#/modes">Mulai</Button>
+    <Button class="btn btn-green" href="#/learn">Materi</Button>
+    <Button class="btn btn-blue" href="#/settings">Pengaturan</Button>
   </div>
 </div>

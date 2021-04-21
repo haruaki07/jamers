@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { pop } from "svelte-spa-router";
   import { css, tw, theme } from "twind/css";
   import Button from "~/libs/Button";
+  import { getModeById } from "~/stores";
+  import { pop } from "svelte-spa-router";
   import ButtonBack from "~/libs/ButtonBack.svelte";
-  import { data } from "~/stores";
 
   const style = tw(
     css({
@@ -23,14 +23,16 @@
       },
     })
   );
+
+  const vocabsMode = getModeById("vocabs");
 </script>
 
 <div class={style}>
   <ButtonBack />
-  <h1 class="title">Pilih Mode</h1>
+  <h1 class="title">Pilih Kategori</h1>
   <div class="grid">
-    {#each $data as mode}
-      <Button class="box" href="#/modes/{mode.id}">{mode.name}</Button>
+    {#each vocabsMode.categories as category}
+      <Button class="box" href="#/play/{category.id}">{category.name}</Button>
     {/each}
   </div>
 </div>

@@ -1,39 +1,36 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { fade, fly } from "svelte/transition";
-  import { tw } from "twind";
+  import { tw, css } from "twind/css";
+  import Button from "~/libs/Button";
   import { score } from "./scores";
 
   const dispatch = createEventDispatcher();
+
+  const style = tw(
+    css({
+      "@apply": "m-4 p-3 rounded-md bg-window-content",
+      ".actions": {
+        "@apply": "mt-3 space-y-3",
+        button: {
+          "@apply": "font-medium text-white rounded-md p-2 w-full",
+        },
+      },
+    })
+  );
 </script>
 
-<div
-  in:fade={{ duration: 150 }}
-  class={tw`fixed inset-0 flex items-center justify-center w-full h-full bg(black opacity-25)`}
->
-  <div
-    class={tw`rounded-md max-w-sm w-full bg-white p-4`}
-    in:fly={{ y: -30, duration: 150 }}
-  >
-    <center>
-      <div class={tw`mb-4 text(xl red-900) font-bold`}>Game over!</div>
-      <p class={tw`text(lg red-800) font-medium`}>
-        Score kamu: {$score}
-      </p>
-    </center>
-    <div class={tw`flex mt-6 children:w-1/2 space-x-4`}>
-      <button
-        class={tw`p-2 bg-red-600 rounded-md text-white font-medium`}
-        on:click={() => dispatch("exit")}
-      >
-        Keluar
-      </button>
-      <button
-        class={tw`p-2 bg-blue-600 rounded-md text-white font-medium`}
-        on:click={() => dispatch("restart")}
-      >
-        Ulangi
-      </button>
-    </div>
+<div class={style}>
+  <center>
+    <p class={tw`text(lg red-800) font-medium`}>
+      Score kamu: {$score}
+    </p>
+  </center>
+  <div class="actions">
+    <Button class={tw`bg-blue-600`} on:click={() => dispatch("restart")}>
+      Ulangi
+    </Button>
+    <Button class={tw`bg-red-600`} on:click={() => dispatch("exit")}>
+      Keluar
+    </Button>
   </div>
 </div>

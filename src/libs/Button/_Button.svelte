@@ -1,33 +1,40 @@
 <script lang="ts">
-  import { tw } from "twind";
-  import { animation, css } from "twind/css";
+  import { sounds } from "~/sounds";
 
-  export let override = false;
-  export let block = false;
-  export let className = "";
+  const hoversound = $sounds["menuhover"];
 
-  let customClass = "";
-  export { customClass as class };
+  let className = "";
+  export { className as class };
+  export let href = null;
 
-  const motion = animation(".15s ease-in", {
-    "50%": {
-      transform: "scale(.75)",
-    },
-    "100%": {
-      transform: "scale(1)",
-    },
-  });
+  function handleMouseUp() {
+    hoversound.play();
+  }
 
-  $: style = tw(
-    css({ "&:active": motion }),
-    {
-      [`text(white sm) font-medium`]: !override,
-      "w-full": block,
-    },
-    customClass
-  );
+  function handleMouseLeave() {
+    hoversound.stop();
+  }
 </script>
 
-<button {...$$restProps} on:click class="{style} {className}">
-  <slot />
-</button>
+{#if href}
+  <a
+    {...$$restProps}
+    {href}
+    class={className}
+    on:click
+    on:mouseup={handleMouseUp}
+    on:mouseleave={handleMouseLeave}
+  >
+    <slot />
+  </a>
+{:else}
+  <button
+    {...$$restProps}
+    class={className}
+    on:click
+    on:mouseup={handleMouseUp}
+    on:mouseleave={handleMouseLeave}
+  >
+    <slot />
+  </button>
+{/if}

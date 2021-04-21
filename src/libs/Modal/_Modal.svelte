@@ -3,11 +3,13 @@
   import { css } from "twind/css";
   import { tw } from "twind";
   import { onDestroy } from "svelte";
+  import bgWindow from "~/assets/window.png";
+  import bgPita from "~/assets/pita.png";
 
   export let dialogClass = "";
   export let open = false;
   export let backdrop = false;
-  export let trapFocus = false;
+  export let title = "";
   export let vAlign: "start" | "center" | "end" = "center";
 
   $: style = {
@@ -23,45 +25,27 @@
       }),
       `items-${vAlign}`
     ),
-    overlay: tw("fixed inset-0 bg-black bg-opacity-25"),
-    dialog: tw`bg-white w-full shadow relative z-10 rounded-md${dialogClass}`,
+    overlay: tw("fixed inset-0 bg-black bg-opacity-10"),
+    dialog: tw(
+      css({
+        "@apply": `w-full relative z-10 rounded-md pb-3 pt-5 pr-2`,
+        backgroundImage: `url(${bgWindow})`,
+        backgroundSize: "100% 100%",
+        backgroundPosition: "top left",
+        minHeight: "200px",
+        ".title": {
+          "@apply":
+            "w-[80%] absolute -top-8 left-[50%] h-14 transform -translate-x-1/2 text(white center 4xl) mr-2 leading-none",
+          backgroundImage: `url(${bgPita})`,
+          backgroundSize: "100% 100%",
+          backgroundPosition: "top left",
+          fontFamily: "Brady Bunch Remastered",
+          textShadow: "0 1px 1px black",
+        },
+      }),
+      dialogClass
+    ),
   };
-
-  export function withTrapFocus(node: HTMLElement) {
-    if (!trapFocus) return;
-    const focusableElements =
-      node.children.length &&
-      (node.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      ) as NodeListOf<HTMLInputElement>);
-    const firstFocusable = focusableElements[0];
-    const lastFocusable = focusableElements[focusableElements.length - 1];
-
-    const handleTab = (e: KeyboardEvent) => {
-      // is Tab key not pressed
-      if (e.key !== "Tab" || e.keyCode !== 9) return;
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusable) {
-          lastFocusable.focus();
-          e.preventDefault();
-        }
-      } else {
-        if (document.activeElement === lastFocusable) {
-          firstFocusable.focus();
-          e.preventDefault();
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleTab, false);
-
-    return {
-      destroy() {
-        document.removeEventListener("keydown", handleTab, false);
-      },
-    };
-  }
 
   function closeModal() {
     open = false;
@@ -73,7 +57,7 @@
 </script>
 
 {#if open}
-  <div class={style.wrapper} use:withTrapFocus>
+  <div class={style.wrapper}>
     <div
       class={style.overlay}
       transition:fade={{ duration: 150 }}
@@ -87,6 +71,7 @@
       on:introend
       on:outroend
     >
+      <div class="title">{title}</div>
       <slot />
     </div>
   </div>

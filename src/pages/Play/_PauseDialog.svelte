@@ -1,20 +1,32 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { tw } from "twind";
+  import { tw, css } from "twind/css";
+  import Button from "~/libs/Button";
 
   const dispatch = createEventDispatcher();
+
+  const style = css({
+    "@apply": `flex(& col) space-y-3 m-4 p-3 bg-window-content rounded-md`,
+    button: {
+      "@apply": "w-1/3 font-medium text-white rounded-md p-2 w-full",
+    },
+  });
 </script>
 
-<div
-  class={tw`flex space-x-4 p-4 children:(w-1/3 font-medium text-white rounded-md p-2)`}
->
-  <button class={tw`bg-red-600`} on:click={() => dispatch("exit")}>
-    Keluar
-  </button>
-  <button class={tw`bg-blue-600`} on:click={() => dispatch("restart")}>
-    Ulangi
-  </button>
-  <button class={tw`bg-green-600`} on:click={() => dispatch("resume")}>
+<div class={tw(style)}>
+  <Button
+    class={tw`bg-green(600 hover:700)`}
+    on:click={() => dispatch("resume")}
+  >
     Lanjut
-  </button>
+  </Button>
+  <Button
+    class={tw`bg-blue(600 hover:700)`}
+    on:click={() => dispatch("restart")}
+  >
+    Ulangi
+  </Button>
+  <Button class={tw`bg-red(600 hover:700)`} on:click={() => dispatch("exit")}>
+    Keluar
+  </Button>
 </div>

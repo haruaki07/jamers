@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Brady Bunch Remastered";
+  src: url("/src/assets/BradyBunchRemastered.eot");
+  src: url("/src/assets/BradyBunchRemastered.eot?#iefix")
+      format("embedded-opentype"),
+    url("/src/assets/BradyBunchRemastered.woff2") format("woff2"),
+    url("/src/assets/BradyBunchRemastered.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

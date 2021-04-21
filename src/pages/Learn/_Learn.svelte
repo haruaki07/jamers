@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { pop } from "svelte-spa-router";
-  import { css, tw, theme } from "twind/css";
+  import { tw, css, theme } from "twind/css";
+  import data from "./data.json?raw";
   import Button from "~/libs/Button";
   import ButtonBack from "~/libs/ButtonBack.svelte";
-  import { data } from "~/stores";
+
+  const vocabs: any[] = JSON.parse(data);
 
   const style = tw(
     css({
@@ -14,11 +15,13 @@
         "@apply": "text(white 6xl) font-black mb-4 py-10 flex-shrink-0",
       },
       ".grid": {
-        "@apply": "grid(& cols-1 md:cols-2) gap-4 overflow-y-auto flex-grow",
-        gridAutoRows: "min-content",
+        "@apply": "flex(& col) space-y-4",
         ".box": {
           "@apply":
-            "rounded-md bg-window-content grid place-items-center text(lg red-900) font-bold p-6",
+            "rounded-md bg-window-content grid place-items-center text(lg red-900) font-bold p-6 transition-transform transform duration-150",
+          "&:hover": {
+            "@apply": "scale-105",
+          },
         },
       },
     })
@@ -27,10 +30,10 @@
 
 <div class={style}>
   <ButtonBack />
-  <h1 class="title">Pilih Mode</h1>
+  <h1 class="title">Materi</h1>
   <div class="grid">
-    {#each $data as mode}
-      <Button class="box" href="#/modes/{mode.id}">{mode.name}</Button>
+    {#each vocabs as vocab}
+      <Button class="box" href="#/learn/{vocab.id}">{vocab.name}</Button>
     {/each}
   </div>
 </div>

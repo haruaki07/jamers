@@ -1,8 +1,8 @@
 <script lang="ts">
   import { css, tw } from "twind/css";
-  import data from "./data.json";
+  import dataUrl from "./data.json?url";
   import { onMount } from "svelte";
-  import { randomIndex, shuffle } from "~/utils";
+  import { randomIndex, shuffle, sleep } from "~/utils";
   import Timer from "~/libs/Timer.svelte";
   import type { TimerEvent } from "easytimer.js";
   import Scores from "~/libs/Scores.svelte";
@@ -11,6 +11,11 @@
   import { hscore, score } from "./scores";
   import { push } from "svelte-spa-router";
   import GameOverDialog from "./_GameOverDialog.svelte";
+  import Button from "~/libs/Button";
+  import { sounds } from "~/sounds";
+  import { getCategory } from "~/stores";
+
+  export let params: { id?: string } = {};
 
   const style = tw(
     css({
@@ -18,14 +23,17 @@
         "w-full h-screen text-center relative select-none p-4 flex flex-col",
       ".question": {
         "@apply":
-          "w-full rounded-lg bg-white h-full flex-grow grid place-content-center text(lg sm:(2xl) red-900) shadow",
+          "w-full h-full bg-window-content border(4 red-800) rounded-lg flex-grow grid place-content-center text(lg sm:2xl red-900)",
+        span: {
+          "@apply": "lowercase inline",
+        },
       },
       ".choices": {
         "@apply":
           "flex space-y-4 w-full flex-col sm:(flex-row space(x-4 y-0)) flex-shrink-0 mt-4",
         button: {
           "@apply":
-            "transition-transform transform duration-200 w-full sm:w-1/3 rounded-lg bg-green-600 text(lg sm:(2xl) white) p-3 text-center",
+            "transition-transform transform duration-200 w-full sm:w-1/3 rounded-lg bg-red-900 text(lg sm:2xl white center) p-3 capitalize shadow",
           "&:hover": {
             "@apply": "scale-105",
           },
@@ -40,6 +48,10 @@
     val: string;
   };
 
+  //#region vars
+  const category = getCategory("vocabs", params.id);
+  let timeLimit = 60; // seconds
+  let isDataLoaded = false;
   let reset = false;
   let isGameOver = false;
   let paused = false;
@@ -48,14 +60,19 @@
     key: "",
     val: "",
   };
-  let original: Vocab[] = data.map((v, i) => ({ id: i, key: v[0], val: v[1] }));
-  let vocabs: Vocab[] = [...original];
+  let original: Vocab[];
+  let vocabs: Vocab[];
   let showPauseModal = false;
+  $: highscore = $hscore[category.id];
 
   const closePauseModal = () => (showPauseModal = false);
   const openPauseModal = () => (showPauseModal = true);
-
+  //#endregion
   onMount(() => {
+    const data = category.vocabs;
+    original = data.map((v, i) => ({ id: i, key: v[0], val: v[1] }));
+    vocabs = [...original];
+    isDataLoaded = true;
     current = getRandVocab();
   });
 
@@ -71,14 +88,15 @@
   }
 
   function randomChoices(length: number, except: string) {
-    const filtered = original.filter((v) => v.key !== except);
-    const shuffled = shuffle<Vocab>(filtered).slice(0, length - 1);
-    shuffled.push(current); // push the correct answer
-    return shuffle<Vocab>(shuffled);
+    const filtered = original.filter((v) => v.key !== except); // without correct answer
+    const choices = shuffle(filtered).slice(0, length - 1);
+    choices.push(current); // push the correct answer
+    return shuffle(choices);
   }
 
   function handleStop(e: TimerEvent) {
     isGameOver = true;
+    $hscore[category.id] = highscore;
   }
 
   function togglePause(state?: boolean) {
@@ -95,14 +113,23 @@
     closePauseModal();
   }
 
-  function handleAnswer(val: string) {
+  async function handleAnswer(e: any, val: string) {
     if (current.val !== val) {
+      e.target.classList.add(tw("bg-red-600!"));
+      await sleep(100); // delay
+      e.target.classList.remove(tw("bg-red-600!"));
       return;
     }
-    vocabs = vocabs.filter(({ key }) => key !== current.key);
-    current = getRandVocab();
-    $score += 10;
-    if ($score >= $hscore) $hscore = $score;
+    e.target.classList.add(tw("bg-green-600!"));
+
+    $sounds["pipop"].play();
+    await sleep(100); // delay
+
+    vocabs = vocabs.filter(({ key }) => key !== current.key); // remove from array
+    $score += 10; // add score
+    if ($score >= highscore) highscore = $score; // if score >= highscore change it
+    current = getRandVocab(); // set next question
+    e.target.classList.remove(tw("bg-green-600!"));
   }
 
   function handleRestart() {
@@ -114,7 +141,7 @@
     $score = 0;
   }
 
-  function handleExit(e: any) {
+  function handleExit() {
     closePauseModal();
     $score = 0;
     push("/");
@@ -122,48 +149,54 @@
   //#endregion
 </script>
 
-<div class={style}>
-  <div class={tw`flex items-center justify-between mb-4 relative`}>
-    <button
-      on:click={pauseGame}
-      class={tw`px-4 rounded-md shadow bg-white text(red-900) font-medium h-full`}
-    >
-      Pause
-    </button>
-    <div class={tw`flex`}>
-      <Scores score={$score} hscore={$hscore} />
-      <Timer
-        class="text-sm bg-red-900 text-white"
-        seconds={60}
-        on:stopped={handleStop}
-        bind:paused
-        bind:reset
-      />
-    </div>
-  </div>
-  {#key current.key}
-    <div class="question">
-      Apakah bahasa jawa dari kata: <br /><b>{current.key}</b>
-    </div>
-    <div class="choices">
-      {#each randomChoices(3, current.key) as choice}
-        <button
-          type="button"
-          on:click={() => handleAnswer(choice.val)}
-          disabled={isGameOver}
-        >
-          {choice.val}
-        </button>
-      {/each}
-    </div>
-  {/key}
+<svelte:window on:blur={() => !isGameOver && pauseGame()} />
 
-  {#if isGameOver}
-    <GameOverDialog on:exit={handleExit} on:restart={handleRestart} />
+<div class={style}>
+  {#if isDataLoaded}
+    <div class={tw`flex items-center justify-between mb-4 relative`}>
+      <Button
+        on:click={pauseGame}
+        class={tw`px-4 rounded-md shadow bg-white text(red-900) font-medium h-full`}
+      >
+        Pause
+      </Button>
+      <div class={tw`flex`}>
+        <Scores score={$score} hscore={highscore} />
+        <Timer
+          class="text-sm bg-red-900 text-white"
+          seconds={timeLimit}
+          on:stopped={handleStop}
+          bind:paused
+          bind:reset
+        />
+      </div>
+    </div>
+    {#key current.key}
+      <div class="question">
+        <p>
+          Apakah <span>{category.name}</span> dari kata:
+        </p>
+        <b>{current.key}</b>
+      </div>
+      <div class="choices">
+        {#each randomChoices(3, current.key) as choice}
+          <button
+            on:click={async (e) => await handleAnswer(e, choice.val)}
+            disabled={isGameOver}
+          >
+            {choice.val}
+          </button>
+        {/each}
+      </div>
+    {/key}
   {/if}
 </div>
 
-<Modal dialogClass="max-w-sm" trapFocus bind:open={showPauseModal}>
+<Modal dialogClass="max-w-sm" title="game over" bind:open={isGameOver}>
+  <GameOverDialog on:exit={handleExit} on:restart={handleRestart} />
+</Modal>
+
+<Modal dialogClass="max-w-sm" title="pause" bind:open={showPauseModal}>
   <PauseDialog
     on:exit={handleExit}
     on:restart={handleRestart}
