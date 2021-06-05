@@ -1,9 +1,8 @@
 <script lang="ts">
   import Router, { location } from "svelte-spa-router";
-  import { tw } from "twind";
   import routes from "./routes";
-  import { fly } from "svelte/transition";
-  import { css } from "twind/css";
+  import { fly, fade } from "svelte/transition";
+  import { css, tw } from "twind/css";
   import { loadSounds } from "./sounds";
   import { onMount } from "svelte";
   import { preload } from "./preloader";
@@ -38,7 +37,7 @@
       "@apply":
         "fixed inset-0 w-full h-screen bg-white z-[9999] grid place-items-center",
       ".progress": {
-        "@apply": "w-36 h-5 border border-red-900 bg-white",
+        "@apply": "w-36 h-5 border(& red-900) bg-white",
         "&::after": {
           "@apply": "block h-full bg-red-900",
           width: "var(--progress-width)",
@@ -55,7 +54,7 @@
 </script>
 
 {#if !$assetsLoaded}
-  <div class={loadingStyle}>
+  <div class={loadingStyle} out:fade={{ delay: 250 }}>
     <div class="progress" style="--progress-width: {$progress}%" />
   </div>
 {:else if $data.length}

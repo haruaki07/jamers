@@ -6,10 +6,12 @@ import bgm from "~/assets/bgm.mp3";
 import { get, writable } from "svelte/store";
 
 export const sounds = writable<Record<string, IHowl>>({});
-export const bgmPlaying = writable(true);
+export const bgmPlaying = writable(localStorage.getItem("bgm") == "true");
+bgmPlaying.subscribe((v) => localStorage.setItem("bgm", v.toString()));
 
 export function muteBgm() {
-  get(sounds)["bgm"].stop();
+  const h = get(sounds)["bgm"].stop();
+  console.log(h);
   bgmPlaying.set(false);
 }
 

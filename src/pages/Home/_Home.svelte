@@ -1,7 +1,6 @@
 <script lang="ts">
   import { css } from "twind/css";
   import { theme, tw } from "twind";
-  import { push } from "svelte-spa-router";
   import Button from "~/libs/Button";
 
   const style = tw(
@@ -18,7 +17,7 @@
       },
       ".btn": {
         transition: "150ms all",
-        willChange: "box-shadow, transform",
+        willChange: "transform",
         "@apply":
           "text(3xl white) font-bold px-10 py-3 rounded-lg focus:(outline-none) outline-none border-0 transform transition-transform duration-200",
         "&:hover": {

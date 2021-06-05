@@ -1,22 +1,15 @@
 import { setup } from "twind";
 import App from "./App.svelte";
 import "./style.css";
-// import { load } from "webfontloader";
-// import BBREot from "~/assets/BradyBunchRemastered.eot";
-// import BBRWof from "~/assets/BradyBunchRemastered.woff";
-// import BBRWof2 from "~/assets/BradyBunchRemastered.woff2";
-
-// load({
-//   classes: false,
-//   custom: {
-//     families: ["Brady Bunch Remastered"],
-//     urls: [BBREot, BBRWof, BBRWof2],
-//   },
-// });
 
 setup({
   preflight: {
+    a: {
+      WebkitTapHighlightColor: "transparent",
+      textDecoration: "none",
+    },
     button: {
+      WebkitTapHighlightColor: "transparent",
       outline: "none",
       "&:focus": {
         outline: "none !important",

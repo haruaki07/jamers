@@ -22,7 +22,7 @@
         "w-full h-screen text-center relative select-none p-4 flex flex-col",
       ".question": {
         "@apply":
-          "w-full bg-window-content border(4 red-800) rounded-lg grid place-items-center text(base md:(center lg) lg:xl red-900 left) flex-grow p-3",
+          "w-full bg-window-content border(4 red-800) rounded-lg grid place-items-center text(base md:lg lg:xl red-900 left) flex-grow p-3",
         height: "300px",
         overflowY: "auto",
       },
@@ -30,7 +30,7 @@
         "@apply": "flex(& col) space-y-4 w-full flex-shrink-0 mt-4",
         button: {
           "@apply":
-            "transition-transform transform duration-200 w-full rounded-lg bg-red-900 text(sm sm:base white md:(center lg)) p-3 capitalize shadow font-medium",
+            "transition-transform transform duration-200 w-full rounded-lg bg-red-900 text(left sm sm:base white md:(center lg)) p-3 capitalize shadow font-medium",
           "&:hover": {
             "@apply": "scale-105",
           },
@@ -85,6 +85,7 @@
 
   function handleStop() {
     isGameOver = true;
+    // console.log($score, $hscore[category.id], highscore);
     if ($score >= $hscore[category.id]) {
       $hscore[category.id] = $score;
     }
@@ -167,7 +168,7 @@
     </div>
     {#key current.id}
       <div class="question">
-        {@html current.text}
+        <p>{@html current.text}</p>
       </div>
       <div class="choices">
         {#each randomChoices() as choice}
