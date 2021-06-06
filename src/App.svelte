@@ -2,17 +2,15 @@
   import Router, { location } from "svelte-spa-router";
   import { tw } from "twind";
   import routes from "./routes";
-  import { fly } from "svelte/transition";
+  import { fly, fade } from "svelte/transition";
   import { css } from "twind/css";
   import { loadSounds } from "./sounds";
   import { onMount } from "svelte";
   import { preload } from "./preloader";
-  import bgHome from "~/assets/bg1.jpg";
   import { data } from "./stores";
-  import { tweened } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
 
-  const { assetsLoaded, loadingProgress, preloadAssets, assets } = preload;
+  const { assetsLoaded, loadingProgress, preloadAssets, getAssetResult } =
+    preload;
 
   onMount(async () => {
     await preloadAssets();
@@ -21,15 +19,13 @@
   });
 
   async function fetchData() {
-    let res = await fetch($assets[3].blobUrl); // ~/data.json
+    let res = await fetch(getAssetResult("data").blobUrl); // ~/data.json
     return res.json();
   }
 
-  $: style = tw(
+  let style = tw(
     css({
-      backgroundImage: `url(${bgHome})`,
-      "@apply":
-        "bg(center cover) bg-white min-h-screen w-full overflow-hidden select-none",
+      "@apply": "bg(center cover) h-full w-full overflow-hidden select-none",
     })
   );
 
@@ -42,28 +38,37 @@
         "&::after": {
           "@apply": "block h-full bg-red-900",
           width: "var(--progress-width)",
+          transition: "1s width",
           content: "''",
         },
       },
     })
   );
-
-  $: progress = tweened($loadingProgress, {
-    duration: 150,
-    easing: cubicOut,
-  });
 </script>
 
 {#if !$assetsLoaded}
-  <div class={loadingStyle}>
-    <div class="progress" style="--progress-width: {$progress}%" />
+  <div class={loadingStyle} out:fade={{ delay: 1000 }}>
+    <div class="progress" style="--progress-width: {$loadingProgress}%" />
   </div>
 {:else if $data.length}
-  <div class={style}>
+  <div
+    class={style}
+    style="background-image: url({getAssetResult('home').url});"
+  >
     {#key $location}
-      <div class={tw`relative`} in:fly={{ y: -100, duration: 200, delay: 100 }}>
+      <div
+        class={tw`relative h-full w-full`}
+        in:fly={{ y: -100, duration: 200, delay: 100 }}
+      >
         <Router {routes} />
       </div>
     {/key}
   </div>
 {/if}
+
+<style>
+  :global(html, body, #app) {
+    width: 100%;
+    height: 100%;
+  }
+</style>

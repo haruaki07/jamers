@@ -1,48 +1,25 @@
 <script lang="ts">
   import { css } from "twind/css";
   import { theme, tw } from "twind";
-  import { push } from "svelte-spa-router";
-  import Button from "~/libs/Button";
+  import PushButton from "~/libs/PushButton";
+  import PageTitle from "~/libs/PageTitle.svelte";
 
   const style = tw(
     css({
-      "@apply":
-        "w-full h-screen text-center relative py-24 sm:py-4 lg:py-24 flex flex-col",
-      ".title": {
-        "@apply": "text(white 6xl) font-black",
-        textShadow: `0 4px 1px ${tw(theme("colors", ["red", "900"]))}`,
-      },
+      "@apply": "page-wrapper",
       ".menu": {
         "@apply":
-          "mt-24 w-full space-y-10 flex flex(col grow) items-center justify-center",
-      },
-      ".btn": {
-        transition: "150ms all",
-        willChange: "box-shadow, transform",
-        "@apply":
-          "text(3xl white) font-bold px-10 py-3 rounded-lg focus:(outline-none) outline-none border-0 transform transition-transform duration-200",
-        "&:hover": {
-          "@apply": "scale-105",
-        },
-        "&-red": {
-          "@apply": "bg-red-600",
-        },
-        "&-green": {
-          "@apply": "bg-green-600",
-        },
-        "&-blue": {
-          "@apply": "bg-blue-600",
-        },
+          "place-self-center mt-16 space-y-10 flex flex(col grow) items-center justify-center",
       },
     })
   );
 </script>
 
 <div class={style}>
-  <h1 class="title">Jamers</h1>
+  <PageTitle />
   <div class="menu">
-    <Button class="btn btn-red" href="#/modes">Mulai</Button>
-    <Button class="btn btn-green" href="#/learn">Materi</Button>
-    <Button class="btn btn-blue" href="#/settings">Pengaturan</Button>
+    <PushButton block variant="red" href="#/modes">Mulai</PushButton>
+    <PushButton block variant="green" href="#/learn">Materi</PushButton>
+    <PushButton block href="#/settings">Pengaturan</PushButton>
   </div>
 </div>

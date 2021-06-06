@@ -1,18 +1,18 @@
 <script lang="ts">
-  import { sounds } from "~/sounds";
+  import { playAudio, sounds } from "~/sounds";
 
-  const hoversound = $sounds["menuhover"];
+  const clickSound = $sounds["btnClick"];
 
   let className = "";
   export { className as class };
   export let href = null;
 
-  function handleMouseUp() {
-    hoversound.play();
+  function handleMouseDown() {
+    playAudio("btnClick");
   }
 
   function handleMouseLeave() {
-    hoversound.stop();
+    clickSound.stop();
   }
 </script>
 
@@ -22,7 +22,10 @@
     {href}
     class={className}
     on:click
-    on:mouseup={handleMouseUp}
+    on:pointerdown
+    on:pointerup
+    on:pointerleave
+    on:mousedown={handleMouseDown}
     on:mouseleave={handleMouseLeave}
   >
     <slot />
@@ -32,9 +35,19 @@
     {...$$restProps}
     class={className}
     on:click
-    on:mouseup={handleMouseUp}
+    on:pointerdown
+    on:pointerup
+    on:pointerleave
+    on:mousedown={handleMouseDown}
     on:mouseleave={handleMouseLeave}
   >
     <slot />
   </button>
 {/if}
+
+<style>
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+</style>

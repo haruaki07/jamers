@@ -1,12 +1,21 @@
 import { Howl } from "howler";
 import type { Howl as IHowl } from "howler";
-import pipop from "~/assets/pipop.wav";
-import menuhover from "~/assets/menuclick.ogg";
-import bgm from "~/assets/bgm.mp3";
+import { preload } from "./preloader";
 import { get, writable } from "svelte/store";
 
+const { getAssetResult, assetsLoaded, getAsset } = preload;
+
 export const sounds = writable<Record<string, IHowl>>({});
-export const bgmPlaying = writable(true);
+export const bgmPlaying = writable(
+  (localStorage.getItem("bgm") || "false") === "true"
+);
+bgmPlaying.subscribe((v) => localStorage.setItem("bgm", v.toString()));
+export const enableSoundEffect = writable(
+  (localStorage.getItem("soundEffect") || "true") === "true"
+);
+enableSoundEffect.subscribe((v) =>
+  localStorage.setItem("soundEffect", v.toString())
+);
 
 export function muteBgm() {
   get(sounds)["bgm"].stop();
@@ -18,13 +27,26 @@ export function playBgm() {
   bgmPlaying.set(true);
 }
 
+export function playAudio(name: string) {
+  if (get(enableSoundEffect)) get(sounds)[name].play();
+}
+
 export function loadSounds() {
+  if (!assetsLoaded) return;
   const urlSounds = [
-    { key: "pipop", opts: { src: pipop, volume: 0.5 } },
-    { key: "menuhover", opts: { src: menuhover } },
+    {
+      key: "correct",
+      opts: { src: getAssetResult("correct").url, volume: 0.5 },
+    },
+    { key: "btnClick", opts: { src: getAssetResult("btnClick").url } },
     {
       key: "bgm",
-      opts: { src: bgm, html5: true, loop: true, autoplay: get(bgmPlaying) },
+      opts: {
+        src: getAssetResult("bgm").url,
+        html5: true,
+        loop: true,
+        autoplay: get(bgmPlaying),
+      },
     },
   ];
   sounds.update((v) => {

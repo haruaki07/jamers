@@ -10,7 +10,7 @@
   import { push } from "svelte-spa-router";
   import GameOverDialog from "./_GameOverDialog.svelte";
   import Button from "~/libs/Button";
-  import { sounds } from "~/sounds";
+  import { playAudio } from "~/sounds";
   import { getCategory } from "~/stores";
   import type { Question } from "~/stores";
 
@@ -115,7 +115,7 @@
     }
     e.target.classList.add(tw("bg-green-600!"));
 
-    $sounds["pipop"].play();
+    playAudio("correct");
     await sleep(100); // delay
 
     $score += 10; // add score
