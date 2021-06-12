@@ -1,18 +1,13 @@
 <script lang="ts">
-  import { pop } from "svelte-spa-router";
-  import { css, tw, theme } from "twind/css";
+  import { css, tw } from "twind/css";
   import Button from "~/libs/Button";
   import ButtonBack from "~/libs/ButtonBack.svelte";
+  import PageTitle from "~/libs/PageTitle.svelte";
   import { data } from "~/stores";
 
   const style = tw(
     css({
-      "@apply":
-        "w-full h-screen text-center relative select-none p-4 flex flex-col",
-      ".title": {
-        textShadow: `0 4px 1px ${tw(theme("colors", ["red", "900"]))}`,
-        "@apply": "text(white 6xl) font-black mb-4 py-10 flex-shrink-0",
-      },
+      "@apply": "page-wrapper p-4 z-[1]",
       ".grid": {
         "@apply": "grid(& cols-1 md:cols-2) gap-4 overflow-y-auto flex-grow",
         gridAutoRows: "min-content",
@@ -25,10 +20,10 @@
   );
 </script>
 
-<div class={style}>
-  <ButtonBack url="/" />
+<ButtonBack url="/" />
 
-  <h1 class="title">Pilih Mode</h1>
+<div class={style}>
+  <PageTitle twClass="uppercase">pilih mode</PageTitle>
   <div class="grid">
     {#each $data as mode}
       <Button class="box" href="#/modes/{mode.id}">{mode.name}</Button>

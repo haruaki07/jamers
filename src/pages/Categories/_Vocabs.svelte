@@ -4,15 +4,11 @@
   import { getModeById } from "~/stores";
   import { pop } from "svelte-spa-router";
   import ButtonBack from "~/libs/ButtonBack.svelte";
+  import PageTitle from "~/libs/PageTitle.svelte";
 
   const style = tw(
     css({
-      "@apply":
-        "w-full h-screen text-center relative select-none p-4 flex flex-col",
-      ".title": {
-        textShadow: `0 4px 1px ${tw(theme("colors", ["red", "900"]))}`,
-        "@apply": "text(white 6xl) font-black mb-4 py-10 flex-shrink-0",
-      },
+      "@apply": "page-wrapper p-4 z-[1]",
       ".grid": {
         "@apply": "grid(& cols-1 md:cols-2) gap-4 overflow-y-auto flex-grow",
         gridAutoRows: "min-content",
@@ -27,10 +23,10 @@
   const vocabsMode = getModeById("vocabs");
 </script>
 
-<div class={style}>
-  <ButtonBack url="/modes" />
+<ButtonBack url="/modes" />
 
-  <h1 class="title">Pilih Kategori</h1>
+<div class={style}>
+  <PageTitle twClass="uppercase">Pilih Kategori</PageTitle>
   <div class="grid">
     {#each vocabsMode.categories as category}
       <Button class="box" href="#/play/{category.id}">{category.name}</Button>

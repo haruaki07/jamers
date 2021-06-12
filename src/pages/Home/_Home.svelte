@@ -16,7 +16,7 @@
 </script>
 
 <div class={style}>
-  <PageTitle />
+  <PageTitle twClass="text-6xl!" />
   <div class="menu">
     <PushButton block variant="red" href="#/modes">Mulai</PushButton>
     <PushButton block variant="green" href="#/learn">Materi</PushButton>

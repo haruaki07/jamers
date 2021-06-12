@@ -8,7 +8,7 @@
   $: style = [
     tw(
       css({
-        "@apply": "text(white 6xl) font-black place-self-center",
+        "@apply": "text(white 4xl lg:6xl) font-black place-self-center",
         textShadow: `0 4px 1px ${tw(theme("colors", ["red", "900"]))}`,
       }),
       twClass

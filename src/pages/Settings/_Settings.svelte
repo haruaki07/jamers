@@ -20,7 +20,7 @@
 <ButtonBack url="/" />
 
 <div class={style}>
-  <PageTitle>Pengaturan</PageTitle>
+  <PageTitle twClass="uppercase">Pengaturan</PageTitle>
   <div class="options">
     <!-- BGM -->
     <div>

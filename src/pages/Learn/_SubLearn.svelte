@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { tw, css, theme } from "twind/css";
+  import { tw, css } from "twind/css";
   import Grid from "gridjs-svelte";
   import "~/../node_modules/gridjs/dist/theme/mermaid.min.css";
   import dataRaw from "./data.json?raw";
-  import Button from "~/libs/Button";
-  import { pop } from "svelte-spa-router";
   import ButtonBack from "~/libs/ButtonBack.svelte";
+  import PageTitle from "~/libs/PageTitle.svelte";
 
   export let params: { id?: string } = {};
 
@@ -15,12 +14,8 @@
 
   const style = tw(
     css({
-      "@apply":
-        "w-full h-screen text-center relative select-none p-4 flex flex-col",
-      ".title": {
-        textShadow: `0 4px 1px ${tw(theme("colors", ["red", "900"]))}`,
-        "@apply": "text(white 6xl) font-black mb-4 py-10 flex-shrink-0",
-      },
+      zIndex: 1,
+      "@apply": "page-wrapper p-4",
       ".grid": {
         "@apply": "flex-grow overflow-y-auto",
       },
@@ -32,10 +27,10 @@
   $: vocabs[0].length !== 4 && columns.pop();
 </script>
 
-<div class={style}>
-  <ButtonBack url="/learn" />
+<ButtonBack url="/learn" />
 
-  <h1 class="title">{data.name}</h1>
+<div class={style}>
+  <PageTitle class="uppercase">{data.name}</PageTitle>
   <div class="grid">
     <Grid
       data={vocabs}
