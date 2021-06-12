@@ -13,6 +13,7 @@
   import { playAudio } from "~/sounds";
   import { getCategory } from "~/stores";
   import type { Question } from "~/stores";
+  import { fly } from "svelte/transition";
 
   export let params: { id?: string } = {};
 
@@ -22,7 +23,7 @@
         "w-full h-screen text-center relative select-none p-4 flex flex-col",
       ".question": {
         "@apply":
-          "w-full bg-window-content border(4 red-800) rounded-lg grid place-items-center text(base md:(center lg) lg:xl red-900 left) flex-grow p-3",
+          "w-full bg-window-content border(4 red-800) rounded-lg grid place-items-center text(base left md:lg lg:xl red-900) flex-grow p-5",
         height: "300px",
         overflowY: "auto",
       },
@@ -121,7 +122,6 @@
     $score += 10; // add score
     if ($score >= highscore) highscore = $score; // if score >= highscore change it
     getQuestion(); // set next question
-    reset = true;
     e.target.classList.remove(tw("bg-green-600!"));
   }
 
@@ -167,7 +167,7 @@
     </div>
     {#key current.id}
       <div class="question">
-        {@html current.text}
+        <p in:fly={{ x: 100, duration: 150 }}>{@html current.text}</p>
       </div>
       <div class="choices">
         {#each randomChoices() as choice}

@@ -13,6 +13,7 @@
   import Button from "~/libs/Button";
   import { playAudio } from "~/sounds";
   import { getCategory } from "~/stores";
+  import { fly } from "svelte/transition";
 
   export let params: { id?: string } = {};
 
@@ -172,10 +173,12 @@
     </div>
     {#key current.key}
       <div class="question">
-        <p>
-          Apakah <span>{category.name}</span> dari kata:
-        </p>
-        <b>{current.key}</b>
+        <div in:fly={{ x: 100, duration: 150 }}>
+          <p>
+            Apakah <span>{category.name}</span> dari kata:
+          </p>
+          <b>{current.key}</b>
+        </div>
       </div>
       <div class="choices">
         {#each randomChoices(3, current.key) as choice}
