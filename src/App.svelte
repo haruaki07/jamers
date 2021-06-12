@@ -8,6 +8,7 @@
   import { onMount } from "svelte";
   import { preload } from "./preloader";
   import { data } from "./stores";
+  import UpdatePrompt from "./libs/UpdatePrompt.svelte";
 
   const { assetsLoaded, loadingProgress, preloadAssets, getAssetResult } =
     preload;
@@ -64,6 +65,7 @@
       </div>
     {/key}
   </div>
+  <UpdatePrompt />
 {/if}
 
 <style>

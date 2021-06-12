@@ -14,6 +14,7 @@
   import { playAudio } from "~/sounds";
   import { getCategory } from "~/stores";
   import { fly } from "svelte/transition";
+  import { Pause as PauseIcon } from "~/libs/Icons";
 
   export let params: { id?: string } = {};
 
@@ -23,7 +24,7 @@
         "w-full h-screen text-center relative select-none p-4 flex flex-col",
       ".question": {
         "@apply":
-          "w-full h-full bg-window-content border(4 red-800) rounded-lg flex-grow grid place-content-center text(lg sm:2xl red-900)",
+          "w-full h-full bg-window-content border(4 red-800) rounded-lg flex-grow grid place-content-center text(lg sm:2xl red-900) overflow-x-hidden",
         span: {
           "@apply": "lowercase inline",
         },
@@ -156,9 +157,9 @@
     <div class={tw`flex items-center justify-between mb-4 relative`}>
       <Button
         on:click={pauseGame}
-        class={tw`px-4 rounded-md shadow bg-white text(red-900) font-medium h-full`}
+        class={tw`text(white 2xl lg:4xl) bg-transparent`}
       >
-        Pause
+        <PauseIcon />
       </Button>
       <div class={tw`flex`}>
         <Scores score={$score} hscore={highscore} />

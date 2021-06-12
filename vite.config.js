@@ -17,16 +17,7 @@ export default defineConfig({
           "**/*.{woff,woff2,eot}",
         ],
       },
-      injectRegister: "script",
-      injectManifest: {
-        globPatterns: [
-          "**/*.{js,css,html,json}",
-          "**/*.{png,jpg}",
-          "**/*.{mp3,ogg,wav}",
-          "**/*.{woff,woff2,eot}",
-        ],
-      },
-      registerType: "autoUpdate",
+      injectRegister: "inline",
       manifest: {
         name: "Jamers",
         short_name: "",
