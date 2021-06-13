@@ -3,6 +3,13 @@ import App from "./App.svelte";
 import "./style.css";
 
 setup({
+  theme: {
+    extend: {
+      fontFamily: {
+        nunito: ["Nunito", "sans-serif"],
+      },
+    },
+  },
   preflight: {
     button: {
       outline: "none",

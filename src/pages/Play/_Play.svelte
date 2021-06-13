@@ -21,7 +21,7 @@
   const style = tw(
     css({
       "@apply":
-        "w-full h-screen text-center relative select-none p-4 flex flex-col",
+        "w-full h-full text-center relative p-4 flex(& col) font-nunito",
       ".question": {
         "@apply":
           "w-full h-full bg-window-content border(4 red-800) rounded-lg flex-grow grid place-content-center text(lg sm:2xl red-900) overflow-x-hidden",

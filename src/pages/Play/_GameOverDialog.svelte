@@ -1,36 +1,33 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { tw, css } from "twind/css";
-  import Button from "~/libs/Button";
+  import { tw } from "twind/css";
+  import PushButton from "~/libs/PushButton";
   import { score } from "./scores";
 
   const dispatch = createEventDispatcher();
-
-  const style = tw(
-    css({
-      "@apply": "m-4 p-3 rounded-md bg-window-content",
-      ".actions": {
-        "@apply": "mt-3 space-y-3",
-        button: {
-          "@apply": "font-medium text-white rounded-md p-2 w-full",
-        },
-      },
-    })
-  );
 </script>
 
-<div class={style}>
+<div class={tw`m-4 p-3 rounded-md bg-window-content`}>
   <center>
-    <p class={tw`text(lg red-800) font-medium`}>
-      Score kamu: {$score}
-    </p>
+    <p class={tw`text(lg red-800) font-medium`}>Score kamu:</p>
+    <p class={tw`text(3xl red-800) font-black`}>{$score}</p>
   </center>
-  <div class="actions">
-    <Button class={tw`bg-blue-600`} on:click={() => dispatch("restart")}>
+  <div class={tw`mt-4 space-y-3`}>
+    <PushButton
+      variant="blue"
+      block
+      twClass="text-base py-2"
+      on:click={() => dispatch("restart")}
+    >
       Ulangi
-    </Button>
-    <Button class={tw`bg-red-600`} on:click={() => dispatch("exit")}>
+    </PushButton>
+    <PushButton
+      variant="red"
+      block
+      twClass="text-base py-2"
+      on:click={() => dispatch("exit")}
+    >
       Keluar
-    </Button>
+    </PushButton>
   </div>
 </div>

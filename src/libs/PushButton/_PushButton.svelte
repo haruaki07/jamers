@@ -7,6 +7,8 @@
   export let twClass = "";
   export let variant = "gray";
   export let block = false;
+  export let icon = false;
+  export let disabled = false;
 
   let pressed = false;
 
@@ -42,14 +44,20 @@
       css({
         "@apply": `rounded-lg outline-none! border-0 select-none ${shadowColor}`,
         ".content": {
-          "@apply": `text(xl ${textColor}) uppercase block font-semibold px-14 py-3 sm:(py-2 px-10) rounded-lg transform -translate-y-[6px] ${bgColor} ${twClass}`,
+          "@apply": `text(xl ${textColor}) uppercase block font-semibold rounded-lg transform -translate-y-[6px] ${bgColor} ${twClass}`,
           "&.pressed": {
             "@apply": "-translate-y-[2px]",
+          },
+          "&:not(.icon)": {
+            "@apply": "px-14 py-3 sm:(py-2 px-10)",
+          },
+          "&.icon": {
+            "@apply": "p-2 flex items-center justify-center",
           },
         },
         "&:disabled": {
           cursor: "not-allowed",
-          filter: "brightness(120%)",
+          filter: "brightness(60%)",
           ".content": {
             "@apply": "-translate-y-[2px]",
           },
@@ -77,9 +85,10 @@
   on:pointerleave={handlePointerUp}
   on:pointerup={handlePointerUp}
   on:click
+  {disabled}
   class={style}
 >
-  <div class="content" class:pressed>
+  <div class="content" class:pressed class:icon class:disabled>
     <slot />
   </div>
 </Button>

@@ -9,7 +9,7 @@
       "@apply": "page-wrapper",
       ".menu": {
         "@apply":
-          "place-self-center mt-16 space-y-10 flex flex(col grow) items-center justify-center",
+          "place-self-center mt-16 space-y-10 flex flex(col grow) items-center justify-center font-nunito",
       },
     })
   );
@@ -18,8 +18,8 @@
 <div class={style}>
   <PageTitle twClass="text-6xl!" />
   <div class="menu">
-    <PushButton block variant="red" href="#/modes">Mulai</PushButton>
-    <PushButton block variant="green" href="#/learn">Materi</PushButton>
+    <PushButton block variant="green" href="#/modes">Mulai</PushButton>
+    <PushButton block variant="red" href="#/learn">Materi</PushButton>
     <PushButton block href="#/settings">Pengaturan</PushButton>
   </div>
 </div>

@@ -541,22 +541,13 @@
             ]
           },
           {
-            "id": 9,
+            "id": 6,
             "text": "Dipun sekecakaken anggenipun ...., kula ugi nembe kemawon ....<br>Tembung-tembung sing trep kanggo nyampurnaake ukara kasebut yaiku...",
             "choices": [
               { "value": "Nedha, nedha", "correct": false },
               { "value": "Nedha, mangan", "correct": false },
               { "value": "Dhahar, nedha", "correct": true },
               { "value": "Nedha, dhahar", "correct": false }
-            ]
-          },
-          {
-            "id": 6,
-            "text": "\"Pak guru sedang memberi materi\"<br>Bahasa ngoko dari kata <b>memberi</b> adalah...",
-            "choices": [
-              { "value": "Nyaosi", "correct": false },
-              { "value": "Menehi", "correct": true },
-              { "value": "Maringi", "correct": false }
             ]
           },
           {
@@ -580,7 +571,7 @@
             ]
           },
           {
-            "id": 10,
+            "id": 9,
             "text": "\"Bapak wis kondur saka Bandhung.\"<br><b>Kondur</b> basa ngokone yaiku...",
             "choices": [
               { "value": "Mulih", "correct": true },
@@ -590,7 +581,7 @@
             ]
           },
           {
-            "id": 11,
+            "id": 10,
             "text": "\"Bu lik lunga pasar numpak pit motor.\"<br>Ukara ing dhuwur basa kramane...",
             "choices": [
               {
@@ -606,7 +597,7 @@
             ]
           },
           {
-            "id": 12,
+            "id": 11,
             "text": "Rina ... Bu guru nabung",
             "choices": [
               { "value": "didhawuhi", "correct": true },
@@ -616,7 +607,7 @@
             ]
           },
           {
-            "id": 13,
+            "id": 12,
             "text": "\"Bu Dian tindak kantor nitih bis\"<br>Salinen nganggo basa ngoko",
             "choices": [
               { "value": "Bu Dian lunga kantor numpak bis", "correct": true },
@@ -629,7 +620,7 @@
             ]
           },
           {
-            "id": 14,
+            "id": 13,
             "text": "Bu, kula .... sekolah, menawi ibu .... kantor pukul pinten?",
             "choices": [
               { "value": "mlampah, tindak", "correct": true },
@@ -639,7 +630,7 @@
             ]
           },
           {
-            "id": 15,
+            "id": 14,
             "text": "Kepriye aturmu nalika nyuwun idin arep nginep ing daleme simbah?",
             "choices": [
               {
@@ -661,7 +652,7 @@
             ]
           },
           {
-            "id": 16,
+            "id": 15,
             "text": "\"Lilis boten mlebet sekolah amargi gerah\"<br>Kanggo Lilis tembung <b>gerah</b> benere...",
             "choices": [
               { "value": "sakit", "correct": true },
@@ -671,7 +662,7 @@
             ]
           },
           {
-            "id": 17,
+            "id": 16,
             "text": "\"Kula sampun kandha marang bapak menawi kula nyuwun artha.\"<br>Tembung <b>kandha</b> ing ukara nduwur benere...",
             "choices": [
               { "value": "Matur", "correct": true },
@@ -681,7 +672,7 @@
             ]
           },
           {
-            "id": 18,
+            "id": 17,
             "text": "\"Adhik .... susu, kula .... es teh ugi bapak .... kopi\"<br>Tembung-tembung sing trep kanggo nyampurnaake ukara kasebut...",
             "choices": [
               { "value": "Nginum, nginum, ngunjuk", "correct": true },
@@ -691,7 +682,7 @@
             ]
           },
           {
-            "id": 19,
+            "id": 18,
             "text": "\"Simbah lagi lara untu.\"<br>Yen nganggo basa krama alus dadi...",
             "choices": [
               { "value": "Simbah nembe gerah waja", "correct": true },
