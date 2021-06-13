@@ -1,8 +1,7 @@
 <script lang="ts">
   import { registerSW } from "virtual:pwa-register";
 
-  let offlineReady = false,
-    needRefresh = false;
+  let offlineReady: boolean, needRefresh: boolean;
 
   const updateSw = registerSW({
     onNeedRefresh() {
@@ -24,7 +23,7 @@
     <div class="message">
       <span> New content available, click on reload button to update. </span>
     </div>
-    <button on:click={() => updateSw(true)}> Update and Reload </button>
+    <button on:click={() => updateSw()}> Update and Reload </button>
     <button on:click={close}> Close </button>
   </div>
 {/if}

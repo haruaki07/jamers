@@ -33,6 +33,7 @@ export default defineConfig({
           "**/*.{woff,woff2,eot}",
         ],
       },
+      injectRegister: "inline",
       manifest: {
         name: "Jamers",
         short_name: "",
