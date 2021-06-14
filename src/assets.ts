@@ -1,6 +1,7 @@
 import bgWindow from "~/assets/window.png";
 import bgHome from "~/assets/bg1.jpg";
 import bgPita from "~/assets/pita.png";
+import jamersLogo from "~/assets/jamers-logo.png";
 import data from "./data.json?url";
 import BBREot from "~/assets/BradyBunchRemastered.eot";
 import BBRWof from "~/assets/BradyBunchRemastered.woff";
@@ -13,6 +14,7 @@ export const images = [
   { name: "window", src: bgWindow },
   { name: "home", src: bgHome },
   { name: "pita", src: bgPita },
+  { name: "jamers-logo", src: jamersLogo },
 ];
 
 export const audios = [

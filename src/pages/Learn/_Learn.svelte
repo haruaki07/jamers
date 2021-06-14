@@ -15,7 +15,7 @@
         "@apply": "flex(& col) space-y-4",
         ".box": {
           "@apply":
-            "rounded-md bg-window-content grid place-items-center text(lg red-900) font-bold p-6 transition-transform transform duration-150",
+            "rounded-md bg-window-content grid place-items-center text(lg red-900) font(bold nunito) p-6 transition-transform transform duration-150",
           "&:hover": {
             "@apply": "scale-105",
           },
