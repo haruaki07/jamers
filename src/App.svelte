@@ -44,6 +44,12 @@
       },
     })
   );
+
+  // window.addEventListener("beforepromptinstall", (e) => {
+  //   e.preventDefault();
+  //   //@ts-ignore
+  //   e.prompt();
+  // });
 </script>
 
 {#if !$assetsLoaded}
@@ -65,6 +71,13 @@
     {/key}
   </div>
 {/if}
+
+<svelte:head>
+  {#if $assetsLoaded}
+    <link rel="preload" as="image" href={getAssetResult("window").url} />
+    <link rel="preload" as="image" href={getAssetResult("pita").url} />
+  {/if}
+</svelte:head>
 
 <style>
   :global(html, body, #app) {

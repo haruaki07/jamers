@@ -5,7 +5,7 @@
   import PageTitle from "~/libs/PageTitle.svelte";
   import { preload } from "~/preloader";
 
-  const { getAsset } = preload;
+  const { getAssetResult } = preload;
 
   const style = tw(
     css({
@@ -24,7 +24,11 @@
 <div class={style}>
   <!-- <PageTitle twClass="text-6xl!" /> -->
   <div class="logo">
-    <img src={getAsset("jamers-logo").src} alt="jamers" draggable="false" />
+    <img
+      src={getAssetResult("jamers-logo").url}
+      alt="jamers"
+      draggable="false"
+    />
   </div>
   <div class="menu">
     <PushButton block variant="green" href="#/modes">Mulai</PushButton>

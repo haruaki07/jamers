@@ -10,22 +10,6 @@ export default defineConfig({
     svelte({ preprocess }),
     VitePWA({
       workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com/,
-            handler: "StaleWhileRevalidate",
-            options: {
-              cacheName: "google-fonts-stylesheet",
-            },
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com/,
-            handler: "StaleWhileRevalidate",
-            options: {
-              cacheName: "google-fonts-webfonts",
-            },
-          },
-        ],
         globPatterns: [
           "**/*.{js,css,html,json}",
           "**/*.{png,jpg}",
@@ -34,6 +18,7 @@ export default defineConfig({
         ],
       },
       injectRegister: "inline",
+      registerType: "autoUpdate",
       manifest: {
         name: "Jamers",
         short_name: "",
