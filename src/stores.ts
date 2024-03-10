@@ -24,6 +24,8 @@ export interface IData {
   categories: ICategory[];
 }
 
+export const started = writable(false);
+
 export const data = writable<IData[]>([]);
 
 export function getModeById(id: string) {

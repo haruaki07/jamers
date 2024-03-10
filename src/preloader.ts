@@ -1,6 +1,8 @@
 import { images, fonts, json, audios } from "./assets";
 import Preload from "preload-it";
 import { writable, get } from "svelte/store";
+import { tweened } from "svelte/motion";
+import { cubicOut } from "svelte/easing";
 
 function preloader() {
   const assetsArr = [...images, ...fonts, ...json, ...audios];
@@ -8,7 +10,10 @@ function preloader() {
     ...assetsArr,
   ]);
   const assetsLoaded = writable(false);
-  const loadingProgress = writable(0);
+  const loadingProgress = tweened(0, {
+    duration: 500,
+    easing: cubicOut,
+  });
 
   const preload = new Preload();
 

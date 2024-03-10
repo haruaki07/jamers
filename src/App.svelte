@@ -7,7 +7,8 @@
   import { loadSounds } from "./sounds";
   import { onMount } from "svelte";
   import { preload } from "./preloader";
-  import { data } from "./stores";
+  import { data, started } from "./stores";
+  import PushButton from "./libs/PushButton/_PushButton.svelte";
 
   const { assetsLoaded, loadingProgress, preloadAssets, getAssetResult } =
     preload;
@@ -32,15 +33,21 @@
   const loadingStyle = tw(
     css({
       "@apply":
-        "fixed inset-0 w-full h-screen bg-white z-[9999] grid place-items-center",
-      ".progress": {
-        "@apply": "w-36 h-5 border border-red-900 bg-white",
-        "&::after": {
-          "@apply": "block h-full bg-red-900",
-          width: "var(--progress-width)",
-          transition: "1s width",
-          content: "''",
-        },
+        "fixed inset-0 w-full h-screen bg-white z-[9999] flex flex-col items-center justify-center",
+    })
+  );
+
+  const btnProgress = tw(
+    css({
+      "&:disabled": {
+        filter: "unset",
+      },
+      ".content": {
+        width: "150px",
+        background: ({ theme }) =>
+          `linear-gradient(to right, ${theme(
+            "colors.blue.600"
+          )} var(--progress), #163b8d var(--progress))`,
       },
     })
   );
@@ -52,11 +59,19 @@
   // });
 </script>
 
-{#if !$assetsLoaded}
+{#if !$assetsLoaded || !$started}
   <div class={loadingStyle} out:fade={{ delay: 1000 }}>
-    <div class="progress" style="--progress-width: {$loadingProgress}%" />
+    <PushButton
+      on:click={() => ($started = true)}
+      variant="blue"
+      class={btnProgress}
+      disabled={!$assetsLoaded}
+      style="--progress: {$loadingProgress}%"
+    >
+      {!$assetsLoaded ? `${Math.round($loadingProgress)}%` : "Start"}
+    </PushButton>
   </div>
-{:else if $data.length}
+{:else if $started && $data.length}
   <div
     class={style}
     style="background-image: url({getAssetResult('home').url});"

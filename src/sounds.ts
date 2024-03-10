@@ -11,13 +11,17 @@ type AudioParam = {
 const { getAssetResult, assetsLoaded, getAsset } = preload;
 
 export const sounds = writable<Record<string, IHowl>>({});
+
+// bgm state
 export const bgmPlaying = writable(
-  (localStorage.getItem("bgm") || "false") === "true"
-); // initial value is false
+  (localStorage.getItem("bgm") || "true") === "true"
+);
 bgmPlaying.subscribe((v) => localStorage.setItem("bgm", v.toString()));
+
+// sound effect state
 export const enableSoundEffect = writable(
   (localStorage.getItem("soundEffect") || "true") === "true"
-); // initial value is true
+);
 enableSoundEffect.subscribe((v) =>
   localStorage.setItem("soundEffect", v.toString())
 );
