@@ -1,14 +1,14 @@
+import type { HowlOptions, Howl as IHowl } from "howler";
 import { Howl } from "howler";
-import type { Howl as IHowl, HowlOptions } from "howler";
-import { preload } from "./preloader";
 import { get, writable } from "svelte/store";
+import { preload } from "./preloader";
 
 type AudioParam = {
   key: string;
   opts: HowlOptions;
 };
 
-const { getAssetResult, assetsLoaded, getAsset } = preload;
+const { getAssetResult } = preload;
 
 export const sounds = writable<Record<string, IHowl>>({});
 
@@ -38,7 +38,9 @@ export function playBgm() {
 }
 
 export function playBgmIfEnabled() {
-  if (get(bgmPlaying)) {
+  const exist = localStorage.getItem("bgm");
+
+  if (exist === null || exist === "true") {
     get(sounds)["bgm"].play();
     bgmPlaying.set(true);
   }
@@ -49,20 +51,25 @@ export function playAudio(name: string) {
 }
 
 export function loadSounds() {
-  if (!assetsLoaded) return;
   const urlSounds: AudioParam[] = [
     {
       key: "correct",
-      opts: { src: getAssetResult("correct").url, volume: 0.5 },
+      opts: {
+        src: getAssetResult("correct").url,
+        volume: 0.5,
+      },
     },
-    { key: "btnClick", opts: { src: getAssetResult("btnClick").url } },
+    {
+      key: "btnClick",
+      opts: { src: getAssetResult("btnClick").url },
+    },
     {
       key: "bgm",
       opts: {
         src: getAssetResult("bgm").url,
         html5: true,
         loop: true,
-        autoplay: get(bgmPlaying),
+        autoplay: false,
       },
     },
   ];

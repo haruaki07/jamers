@@ -88,6 +88,7 @@
   {/if}
 </div>
 
+<!-- TODO: this should be injected on build -->
 <svelte:head>
   {#if $assetsLoaded}
     <link rel="preload" as="image" href={getAssetResult("window").url} />

@@ -21,9 +21,7 @@ function preloader() {
     preload.fetch(assetsArr.map((asset) => asset.src));
 
   preload.onprogress = (event: any) => {
-    if (get(loadingProgress) < 100) {
-      loadingProgress.set(event.progress);
-    }
+    loadingProgress.set(event.progress);
   };
 
   preload.oncomplete = (items: any[]) => {
@@ -33,9 +31,7 @@ function preloader() {
         const idx = v.findIndex((v) => v.src === item.url);
         result.push({ ...v[idx], result: item });
       });
-      if (items.length === result.length && get(loadingProgress) < 100) {
-        loadingProgress.set(100);
-      }
+
       return result;
     });
     assetsLoaded.set(true);
