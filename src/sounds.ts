@@ -16,7 +16,6 @@ export const sounds = writable<Record<string, IHowl>>({});
 export const bgmPlaying = writable(
   (localStorage.getItem("bgm") || "true") === "true"
 );
-bgmPlaying.subscribe((v) => localStorage.setItem("bgm", v.toString()));
 
 // sound effect state
 export const enableSoundEffect = writable(
@@ -29,11 +28,20 @@ enableSoundEffect.subscribe((v) =>
 export function muteBgm() {
   get(sounds)["bgm"].pause();
   bgmPlaying.set(false);
+  localStorage.setItem("bgm", "false");
 }
 
 export function playBgm() {
   get(sounds)["bgm"].play();
   bgmPlaying.set(true);
+  localStorage.setItem("bgm", "true");
+}
+
+export function playBgmIfEnabled() {
+  if (get(bgmPlaying)) {
+    get(sounds)["bgm"].play();
+    bgmPlaying.set(true);
+  }
 }
 
 export function playAudio(name: string) {

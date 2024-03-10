@@ -1,14 +1,15 @@
 <script lang="ts">
-  import Router, { location } from "svelte-spa-router";
-  import { tw } from "twind";
-  import routes from "./routes";
-  import { fly, fade } from "svelte/transition";
-  import { css } from "twind/css";
-  import { loadSounds } from "./sounds";
   import { onMount } from "svelte";
-  import { preload } from "./preloader";
-  import { data, started } from "./stores";
+  import Router, { location } from "svelte-spa-router";
+  import { fly } from "svelte/transition";
+  import { tw } from "twind";
+  import { css } from "twind/css";
+  import bgHome from "~/assets/bg1.jpg";
   import PushButton from "./libs/PushButton/_PushButton.svelte";
+  import { preload } from "./preloader";
+  import routes from "./routes";
+  import { loadSounds, playBgmIfEnabled } from "./sounds";
+  import { data, started } from "./stores";
 
   const { assetsLoaded, loadingProgress, preloadAssets, getAssetResult } =
     preload;
@@ -33,7 +34,7 @@
   const loadingStyle = tw(
     css({
       "@apply":
-        "fixed inset-0 w-full h-screen bg-white z-[9999] flex flex-col items-center justify-center",
+        "fixed inset-0 w-full h-screen z-[9999] flex flex-col items-center justify-center",
     })
   );
 
@@ -59,23 +60,23 @@
   // });
 </script>
 
-{#if !$assetsLoaded || !$started}
-  <div class={loadingStyle} out:fade={{ delay: 1000 }}>
-    <PushButton
-      on:click={() => ($started = true)}
-      variant="blue"
-      class={btnProgress}
-      disabled={!$assetsLoaded}
-      style="--progress: {$loadingProgress}%"
-    >
-      {!$assetsLoaded ? `${Math.round($loadingProgress)}%` : "Start"}
-    </PushButton>
-  </div>
-{:else if $started && $data.length}
-  <div
-    class={style}
-    style="background-image: url({getAssetResult('home').url});"
-  >
+<div class={style} style="background-image: url({bgHome});">
+  {#if !$assetsLoaded || !$started}
+    <div class={loadingStyle}>
+      <PushButton
+        on:click={() => {
+          playBgmIfEnabled();
+          $started = true;
+        }}
+        variant="blue"
+        class={btnProgress}
+        disabled={!$assetsLoaded}
+        style="--progress: {$loadingProgress}%"
+      >
+        {!$assetsLoaded ? `${Math.round($loadingProgress)}%` : "Start"}
+      </PushButton>
+    </div>
+  {:else}
     {#key $location}
       <div
         class={tw`relative h-full w-full`}
@@ -84,8 +85,8 @@
         <Router {routes} />
       </div>
     {/key}
-  </div>
-{/if}
+  {/if}
+</div>
 
 <svelte:head>
   {#if $assetsLoaded}
