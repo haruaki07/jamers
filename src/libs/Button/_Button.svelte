@@ -12,7 +12,7 @@
   }
 
   function handleMouseLeave() {
-    clickSound.stop();
+    clickSound?.stop();
   }
 </script>
 
